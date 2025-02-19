@@ -1,9 +1,6 @@
 import streamlit as st
 import streamlit.components.v1 as components
 
-# -------------------------------------------------
-# 1) Tailwind + FontAwesome + minimal global styles
-# -------------------------------------------------
 TAILWIND_HEADER = """
 <head>
   <script src="https://cdn.tailwindcss.com"></script>
@@ -23,35 +20,35 @@ TAILWIND_HEADER = """
 </head>
 """
 
-# -------------------------------------------------
-# SPLASH SCREEN
-# -------------------------------------------------
+# 1) SPLASH SCREEN with an automatic redirect to "?screen=Onboarding" after 3 seconds
 SPLASH_SCREEN_HTML = f"""
 <html>
   {TAILWIND_HEADER}
-  <body class="min-h-screen bg-gradient-to-br from-blue-200 to-teal-200 flex items-center justify-center">
+  <!-- 
+    onload sets a timer for 3 seconds (3000 ms).
+    After that, it updates the URL to ?screen=Onboarding.
+  -->
+  <body onload="setTimeout(function(){{ window.location.search='?screen=Onboarding' }}, 3000)"
+        class="min-h-screen bg-gradient-to-br from-blue-200 to-teal-200 flex items-center justify-center">
     <div class="text-center">
       <div class="w-32 h-32 bg-white rounded-full flex items-center justify-center shadow-lg mx-auto">
           <i class="fa-solid fa-heart-pulse text-blue-500 text-5xl"></i>
       </div>
       <h1 class="text-4xl font-bold text-blue-900 mt-6">VitalScan</h1>
       <p class="text-lg text-teal-800 mt-2">Contactless Health Monitoring</p>
+      <p class="mt-4 text-sm text-gray-600">Redirecting in 3 seconds...</p>
     </div>
   </body>
 </html>
 """
 
-# -------------------------------------------------
-# ONBOARDING SCREEN
-#  - "Skip" => ?screen=Home
-#  - "Get Started" => ?screen=Measurement
-# -------------------------------------------------
+# 2) ONBOARDING PAGE
 ONBOARDING_HTML = f"""
 <html>
   {TAILWIND_HEADER}
   <body class="min-h-screen bg-white flex flex-col">
     <header class="p-4 flex justify-between items-center">
-      <!-- 'Skip' link navigates to Home -->
+      <!-- 'Skip' => Home -->
       <a href="?screen=Home" class="text-sm text-gray-500">Skip</a>
       <div class="flex space-x-2">
          <div class="w-2 h-2 rounded-full bg-gray-900"></div>
@@ -65,9 +62,7 @@ ONBOARDING_HTML = f"""
       </div>
       <div class="space-y-6">
           <h1 class="text-3xl font-bold text-gray-900">Contactless Vital Signs</h1>
-          <p class="text-lg text-gray-600">
-            Monitor your health vitals using just your smartphone camera. No additional devices needed.
-          </p>
+          <p class="text-lg text-gray-600">Monitor your health vitals using just your smartphone camera. No additional devices needed.</p>
       </div>
       <div class="mt-12 space-y-6">
           <div class="flex items-center gap-4">
@@ -110,9 +105,7 @@ ONBOARDING_HTML = f"""
 </html>
 """
 
-# -------------------------------------------------
-# HOME SCREEN
-# -------------------------------------------------
+# 3) HOME PAGE
 HOME_HTML = f"""
 <html>
   {TAILWIND_HEADER}
@@ -136,9 +129,7 @@ HOME_HTML = f"""
 </html>
 """
 
-# -------------------------------------------------
-# MEASUREMENT SCREEN
-# -------------------------------------------------
+# 4) MEASUREMENT PAGE
 MEASUREMENT_HTML = f"""
 <html>
   {TAILWIND_HEADER}
@@ -170,9 +161,6 @@ MEASUREMENT_HTML = f"""
 </html>
 """
 
-# -------------------------------------------------
-# Dictionary of screens
-# -------------------------------------------------
 SCREENS = {
     "Splash": SPLASH_SCREEN_HTML,
     "Onboarding": ONBOARDING_HTML,
@@ -180,26 +168,20 @@ SCREENS = {
     "Measurement": MEASUREMENT_HTML,
 }
 
-
 def main():
     st.set_page_config(page_title="Contactless Mobile Vital Signs", layout="wide")
 
-    # 1) Read the query param "screen"
-    #    st.query_params is a property, so we access it like a dict, not as a function
+    # 1) Read ?screen=... from the URL
     qparams = st.query_params
     screen_param = qparams.get("screen", ["Splash"])[0]
 
-    # 2) Fallback to "Splash" if unknown
+    # 2) If unknown, default to "Splash"
     if screen_param not in SCREENS:
         screen_param = "Splash"
 
-    # 3) Render the chosen screen's HTML
+    # 3) Render
     html_code = SCREENS[screen_param]
     components.html(html_code, height=900, scrolling=True)
-
-    # (Optional) If you do not want a second nav, do NOT add any radio or st.sidebar here.
-    # This ensures the only nav is from your HTML links or buttons.
-
 
 if __name__ == "__main__":
     main()
