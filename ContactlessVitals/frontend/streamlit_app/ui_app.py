@@ -160,7 +160,7 @@ def main():
     st.set_page_config(page_title="Tailwind Navigation Demo", layout="wide")
 
     # 1) Read the query param (e.g. ?screen=Measurement)
-    query_params = st.experimental_get_query_params()
+    query_params = st.query_params()
     screen_param = query_params.get("screen", ["Onboarding"])[0]
     if screen_param not in SCREENS:
         screen_param = "Onboarding"
