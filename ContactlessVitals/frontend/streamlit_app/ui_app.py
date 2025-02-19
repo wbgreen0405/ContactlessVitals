@@ -279,16 +279,20 @@ SCREENS = {
 
 def main():
     st.set_page_config(page_title="Contactless Mobile Vital Signs", layout="wide")
-    # Read query parameter "screen" from URL
-    qparams = st.query_params
+    st.write("## Debug: Splash example with forced redirect in Python")
+
+    # 1) Read ?screen=... from the URL using the experimental API
+    qparams = st.experimental_get_query_params()
     screen_param = qparams.get("screen", ["Splash"])[0]
+
+    # 2) If unknown, default to "Splash"
     if screen_param not in SCREENS:
         screen_param = "Splash"
 
-    # If on the Splash screen, display it then auto-redirect after 3 seconds to Onboarding
+    # 3) Render the appropriate screen
     if screen_param == "Splash":
         components.html(SCREENS["Splash"], height=900, scrolling=False)
-        time.sleep(3)
+        time.sleep(3)  # wait for 3 seconds
         st.experimental_set_query_params(screen="Onboarding")
         st.experimental_rerun()
     else:
