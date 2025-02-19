@@ -6,14 +6,12 @@ import streamlit.components.v1 as components
 # -------------------------------------------------
 TAILWIND_HEADER = """
 <head>
-  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
       window.FontAwesomeConfig = { autoReplaceSvg: 'nest' };
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"
-          crossorigin="anonymous"
-          referrerpolicy="no-referrer"></script>
+          crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <style>
       * {
           font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -26,7 +24,7 @@ TAILWIND_HEADER = """
 """
 
 # -------------------------------------------------
-# 2) SPLASH SCREEN (Light blue and teal color scheme)
+# SPLASH SCREEN
 # -------------------------------------------------
 SPLASH_SCREEN_HTML = f"""
 <html>
@@ -44,8 +42,9 @@ SPLASH_SCREEN_HTML = f"""
 """
 
 # -------------------------------------------------
-# 3) ONBOARDING SCREEN
-#    "Skip" navigates to Home; "Get Started" navigates to Measurement.
+# ONBOARDING SCREEN
+#  - "Skip" => ?screen=Home
+#  - "Get Started" => ?screen=Measurement
 # -------------------------------------------------
 ONBOARDING_HTML = f"""
 <html>
@@ -101,8 +100,9 @@ ONBOARDING_HTML = f"""
       </div>
     </main>
     <footer class="p-6">
-      <!-- 'Get Started' button navigates to Measurement page -->
-      <button onclick="window.location.search='?screen=Measurement'" class="w-full bg-gray-900 text-white py-4 rounded-xl font-semibold">
+      <!-- 'Get Started' => Measurement -->
+      <button onclick="window.location.search='?screen=Measurement'"
+              class="w-full bg-gray-900 text-white py-4 rounded-xl font-semibold">
         Get Started
       </button>
     </footer>
@@ -111,7 +111,7 @@ ONBOARDING_HTML = f"""
 """
 
 # -------------------------------------------------
-# 4) HOME SCREEN (placeholder)
+# HOME SCREEN
 # -------------------------------------------------
 HOME_HTML = f"""
 <html>
@@ -119,7 +119,8 @@ HOME_HTML = f"""
   <body class="min-h-screen bg-gray-100">
     <header class="p-4 flex justify-between items-center bg-white">
       <h1 class="text-xl font-bold">Welcome Back</h1>
-      <img src="https://api.dicebear.com/7.x/notionists/svg?scale=200&seed=123" class="w-10 h-10 rounded-full"/>
+      <img src="https://api.dicebear.com/7.x/notionists/svg?scale=200&seed=123"
+           class="w-10 h-10 rounded-full"/>
     </header>
     <main class="p-4 space-y-6">
       <div class="bg-white p-6 rounded-xl shadow-sm">
@@ -129,14 +130,14 @@ HOME_HTML = f"""
               <p class="text-gray-600">Good Condition</p>
           </div>
       </div>
-      <!-- Additional content can go here -->
+      <!-- Additional content here... -->
     </main>
   </body>
 </html>
 """
 
 # -------------------------------------------------
-# 5) MEASUREMENT SCREEN (placeholder for live feed)
+# MEASUREMENT SCREEN
 # -------------------------------------------------
 MEASUREMENT_HTML = f"""
 <html>
@@ -170,184 +171,35 @@ MEASUREMENT_HTML = f"""
 """
 
 # -------------------------------------------------
-# 6) RESULTS SCREEN (placeholder)
-# -------------------------------------------------
-RESULTS_HTML = f"""
-<html>
-  {TAILWIND_HEADER}
-  <body class="min-h-screen bg-white">
-    <header class="p-4 bg-white border-b">
-      <div class="flex items-center">
-          <a href="?screen=Measurement" class="mr-4"><i class="fa-solid fa-arrow-left text-gray-600 text-xl"></i></a>
-          <h1 class="text-xl font-bold text-gray-800">Scan Results</h1>
-      </div>
-    </header>
-    <main class="p-6">
-      <div class="grid grid-cols-2 gap-4">
-          <!-- Blood Pressure Card -->
-          <div class="bg-white p-6 rounded-xl shadow-sm">
-              <div class="flex justify-between items-center mb-4">
-                  <div class="flex items-center gap-2">
-                      <i class="fa-solid fa-droplet text-gray-600 text-xl"></i>
-                      <h2 class="text-lg font-semibold text-gray-800">Blood Pressure</h2>
-                  </div>
-                  <span class="px-3 py-1 bg-gray-100 text-gray-600 text-sm rounded-full">Normal</span>
-              </div>
-              <div class="flex items-baseline">
-                  <span class="text-3xl font-bold text-gray-800">120/80</span>
-                  <span class="ml-2 text-gray-500">mmHg</span>
-              </div>
-          </div>
-          <!-- Heart Rate Card -->
-          <div class="bg-white p-6 rounded-xl shadow-sm">
-              <div class="flex justify-between items-center mb-4">
-                  <div class="flex items-center gap-2">
-                      <i class="fa-solid fa-heart text-gray-600 text-xl"></i>
-                      <h2 class="text-lg font-semibold text-gray-800">Heart Rate</h2>
-                  </div>
-                  <span class="px-3 py-1 bg-gray-800 text-white text-sm rounded-full">High</span>
-              </div>
-              <div class="flex items-baseline">
-                  <span class="text-3xl font-bold text-gray-800">92 BPM</span>
-              </div>
-          </div>
-          <!-- Blood Oxygen Card -->
-          <div class="bg-white p-6 rounded-xl shadow-sm">
-              <div class="flex justify-between items-center mb-4">
-                  <div class="flex items-center gap-2">
-                      <i class="fa-solid fa-lungs text-gray-600 text-xl"></i>
-                      <h2 class="text-lg font-semibold text-gray-800">Blood Oxygen</h2>
-                  </div>
-                  <span class="px-3 py-1 bg-gray-100 text-gray-600 text-sm rounded-full">Normal</span>
-              </div>
-              <div class="flex items-baseline">
-                  <span class="text-3xl font-bold text-gray-800">98%</span>
-              </div>
-          </div>
-          <!-- Respiratory Rate Card -->
-          <div class="bg-white p-6 rounded-xl shadow-sm">
-              <div class="flex justify-between items-center mb-4">
-                  <div class="flex items-center gap-2">
-                      <i class="fa-solid fa-wave-square text-gray-600 text-xl"></i>
-                      <h2 class="text-lg font-semibold text-gray-800">Respiratory Rate</h2>
-                  </div>
-                  <span class="px-3 py-1 bg-gray-100 text-gray-600 text-sm rounded-full">Normal</span>
-              </div>
-              <div class="flex items-baseline">
-                  <span class="text-3xl font-bold text-gray-800">16 breaths/min</span>
-              </div>
-          </div>
-      </div>
-    </main>
-  </body>
-</html>
-"""
-
-# -------------------------------------------------
-# 7) HISTORY & TRENDS SCREEN (placeholder)
-# -------------------------------------------------
-HISTORY_HTML = f"""
-<html>
-  {TAILWIND_HEADER}
-  <body class="min-h-screen bg-white">
-    <header class="p-4 border-b">
-      <div class="flex justify-between items-center">
-          <h1 class="text-xl font-bold">History & Trends</h1>
-          <i class="fa-solid fa-calendar text-gray-600 text-xl"></i>
-      </div>
-    </header>
-    <div class="p-6">
-      <div class="bg-white p-4 rounded-xl shadow-sm mb-6">
-        <h2 class="font-bold text-gray-800 mb-2">Heart Rate Trends</h2>
-        <!-- Placeholder for a bar chart -->
-        <div class="h-48 bg-gray-100 rounded-lg flex items-end p-4">
-          <div class="w-8 h-32 bg-gray-800 rounded-t-sm mx-1"></div>
-          <div class="w-8 h-24 bg-gray-800 rounded-t-sm mx-1"></div>
-          <div class="w-8 h-40 bg-gray-800 rounded-t-sm mx-1"></div>
-          <div class="w-8 h-28 bg-gray-800 rounded-t-sm mx-1"></div>
-          <div class="w-8 h-36 bg-gray-800 rounded-t-sm mx-1"></div>
-          <div class="w-8 h-20 bg-gray-800 rounded-t-sm mx-1"></div>
-          <div class="w-8 h-28 bg-gray-800 rounded-t-sm mx-1"></div>
-        </div>
-      </div>
-      <div class="bg-white p-4 rounded-xl shadow-sm">
-        <h2 class="font-bold text-gray-800 mb-2">Blood Pressure Trends</h2>
-        <!-- Placeholder for a line graph -->
-        <div class="h-48 bg-gray-100 rounded-lg"></div>
-      </div>
-    </div>
-  </body>
-</html>
-"""
-
-# -------------------------------------------------
-# 8) SETTINGS & PROFILE SCREEN (placeholder)
-# -------------------------------------------------
-SETTINGS_HTML = f"""
-<html>
-  {TAILWIND_HEADER}
-  <body class="min-h-screen bg-gray-50">
-    <header class="p-4 border-b flex justify-between items-center">
-      <h1 class="text-xl font-bold">Settings & Profile</h1>
-      <img src="https://api.dicebear.com/7.x/notionists/svg?scale=200&seed=123"
-           class="w-10 h-10 rounded-full"/>
-    </header>
-    <main class="p-6">
-      <h2 class="text-2xl font-bold mb-4">Customization Options</h2>
-      <p class="text-gray-600">
-        Customize which vital signs to view, change theme colors, and update personal information.
-      </p>
-      <div class="mt-6">
-          <label class="block text-gray-700 font-semibold mb-2">Preferred Theme</label>
-          <select class="border rounded p-2 w-full">
-            <option>Light</option>
-            <option>Dark</option>
-          </select>
-      </div>
-    </main>
-  </body>
-</html>
-"""
-
-# -------------------------------------------------
-# Dictionary for all screens
+# Dictionary of screens
 # -------------------------------------------------
 SCREENS = {
     "Splash": SPLASH_SCREEN_HTML,
     "Onboarding": ONBOARDING_HTML,
     "Home": HOME_HTML,
     "Measurement": MEASUREMENT_HTML,
-    "Results": RESULTS_HTML,
-    "History": HISTORY_HTML,
-    "Settings": SETTINGS_HTML,
 }
+
 
 def main():
     st.set_page_config(page_title="Contactless Mobile Vital Signs", layout="wide")
-    st.title("Contactless Mobile Vital Signs")
 
-    # 1) Read the query param (e.g. ?screen=Measurement)
-    # Note: st.query_params is now a property (not callable), so we simply use it directly.
-    query_params = st.query_params
-    screen_param = query_params.get("screen", ["Splash"])[0]
+    # 1) Read the query param "screen"
+    #    st.query_params is a property, so we access it like a dict, not as a function
+    qparams = st.query_params
+    screen_param = qparams.get("screen", ["Splash"])[0]
+
+    # 2) Fallback to "Splash" if unknown
     if screen_param not in SCREENS:
         screen_param = "Splash"
 
-    # Save current screen in session state (for sidebar navigation)
-    if "screen" not in st.session_state:
-        st.session_state["screen"] = screen_param
+    # 3) Render the chosen screen's HTML
+    html_code = SCREENS[screen_param]
+    components.html(html_code, height=900, scrolling=True)
 
-    # 2) Render the selected screen's HTML
-    html_code = SCREENS[st.session_state["screen"]]
-    components.html(html_code, height=1000, scrolling=True)
+    # (Optional) If you do not want a second nav, do NOT add any radio or st.sidebar here.
+    # This ensures the only nav is from your HTML links or buttons.
 
-    # 3) Sidebar navigation (for testing and debugging)
-    st.sidebar.markdown("### Navigation")
-    nav_choice = st.sidebar.radio("Go to Screen", list(SCREENS.keys()), index=list(SCREENS.keys()).index(st.session_state["screen"]))
-    if nav_choice != st.session_state["screen"]:
-        st.session_state["screen"] = nav_choice
-        st.set_query_params(screen=nav_choice)
-        st.experimental_rerun()
 
 if __name__ == "__main__":
     main()
