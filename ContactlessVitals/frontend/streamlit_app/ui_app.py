@@ -1,4 +1,3 @@
-import time
 import streamlit as st
 import streamlit.components.v1 as components
 
@@ -26,7 +25,11 @@ TAILWIND_HEADER = """
 # --------------------------
 SPLASH_SCREEN_HTML = f"""
 <html>
-  {TAILWIND_HEADER}
+  <head>
+    {TAILWIND_HEADER}
+    <!-- Redirect after 3 seconds -->
+    <meta http-equiv="refresh" content="3; URL=?screen=Onboarding">
+  </head>
   <body class="min-h-screen bg-gradient-to-br from-blue-200 to-teal-200 flex items-center justify-center">
     <div class="text-center">
       <div class="w-32 h-32 bg-white rounded-full flex items-center justify-center shadow-lg mx-auto">
@@ -259,16 +262,13 @@ HISTORY_TRENDS_HTML = f"""
         </button>
       </div>
     </nav>
-  </div>
-</body>
+  </body>
 </html>
 """
 
 # --------------------------
-# 6) (Optional) Settings & Profile Screen (not requested here)
-# --------------------------
-
 # Dictionary of screens
+# --------------------------
 SCREENS = {
     "Splash": SPLASH_SCREEN_HTML,
     "Onboarding": ONBOARDING_HTML,
@@ -279,24 +279,17 @@ SCREENS = {
 
 def main():
     st.set_page_config(page_title="Contactless Mobile Vital Signs", layout="wide")
-    st.write("## Debug: Splash example with forced redirect in Python")
+    st.write("## Debug: Splash example with forced redirect using meta refresh")
 
-    # 1) Read ?screen=... from the URL using the experimental API
-    qparams = st.experimental_get_query_params()
+    # Use st.query_params to read the query parameters.
+    qparams = st.query_params
     screen_param = qparams.get("screen", ["Splash"])[0]
 
-    # 2) If unknown, default to "Splash"
     if screen_param not in SCREENS:
         screen_param = "Splash"
 
-    # 3) Render the appropriate screen
-    if screen_param == "Splash":
-        components.html(SCREENS["Splash"], height=900, scrolling=False)
-        time.sleep(3)  # wait for 3 seconds
-        st.experimental_set_query_params(screen="Onboarding")
-        st.experimental_rerun()
-    else:
-        components.html(SCREENS[screen_param], height=900, scrolling=True)
+    # Render the appropriate screen's HTML.
+    components.html(SCREENS[screen_param], height=900, scrolling=True)
 
 if __name__ == "__main__":
     main()
