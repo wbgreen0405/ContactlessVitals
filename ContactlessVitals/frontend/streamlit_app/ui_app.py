@@ -1,6 +1,10 @@
+import time
 import streamlit as st
 import streamlit.components.v1 as components
 
+# --------------------------
+# Tailwind + FontAwesome header (common to all pages)
+# --------------------------
 TAILWIND_HEADER = """
 <head>
   <script src="https://cdn.tailwindcss.com"></script>
@@ -8,26 +12,21 @@ TAILWIND_HEADER = """
       window.FontAwesomeConfig = { autoReplaceSvg: 'nest' };
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"
-          crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+          crossorigin="anonymous"
+          referrerpolicy="no-referrer"></script>
   <style>
-      * {
-          font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-      }
-      ::-webkit-scrollbar {
-          display: none;
-      }
+      * { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
+      ::-webkit-scrollbar { display: none; }
   </style>
 </head>
 """
 
-# 1) SPLASH SCREEN with an automatic redirect to "?screen=Onboarding" after 3 seconds
+# --------------------------
+# 1) Splash Screen: auto-redirect after 3 seconds to Onboarding
+# --------------------------
 SPLASH_SCREEN_HTML = f"""
 <html>
   {TAILWIND_HEADER}
-  <head>
-    <!-- Redirect to ?screen=Onboarding after 3 seconds -->
-    <meta http-equiv="refresh" content="3; url=?screen=Onboarding" />
-  </head>
   <body class="min-h-screen bg-gradient-to-br from-blue-200 to-teal-200 flex items-center justify-center">
     <div class="text-center">
       <div class="w-32 h-32 bg-white rounded-full flex items-center justify-center shadow-lg mx-auto">
@@ -35,20 +34,21 @@ SPLASH_SCREEN_HTML = f"""
       </div>
       <h1 class="text-4xl font-bold text-blue-900 mt-6">VitalScan</h1>
       <p class="text-lg text-teal-800 mt-2">Contactless Health Monitoring</p>
-      <p class="mt-4 text-sm text-gray-600">Redirecting in 3 seconds...</p>
+      <p class="mt-4 text-sm text-gray-600">Please wait...</p>
     </div>
   </body>
 </html>
 """
 
-
-# 2) ONBOARDING PAGE
+# --------------------------
+# 2) Onboarding Screen: "Skip" goes to Home and "Get Started" goes to Measurement
+# --------------------------
 ONBOARDING_HTML = f"""
 <html>
   {TAILWIND_HEADER}
   <body class="min-h-screen bg-white flex flex-col">
     <header class="p-4 flex justify-between items-center">
-      <!-- 'Skip' => Home -->
+      <!-- "Skip" navigates to Home -->
       <a href="?screen=Home" class="text-sm text-gray-500">Skip</a>
       <div class="flex space-x-2">
          <div class="w-2 h-2 rounded-full bg-gray-900"></div>
@@ -95,7 +95,7 @@ ONBOARDING_HTML = f"""
       </div>
     </main>
     <footer class="p-6">
-      <!-- 'Get Started' => Measurement -->
+      <!-- "Get Started" navigates to Measurement -->
       <button onclick="window.location.search='?screen=Measurement'"
               class="w-full bg-gray-900 text-white py-4 rounded-xl font-semibold">
         Get Started
@@ -105,7 +105,9 @@ ONBOARDING_HTML = f"""
 </html>
 """
 
-# 3) HOME PAGE
+# --------------------------
+# 3) Home Screen (Placeholder)
+# --------------------------
 HOME_HTML = f"""
 <html>
   {TAILWIND_HEADER}
@@ -115,7 +117,7 @@ HOME_HTML = f"""
       <img src="https://api.dicebear.com/7.x/notionists/svg?scale=200&seed=123"
            class="w-10 h-10 rounded-full"/>
     </header>
-    <main class="p-4 space-y-6">
+    <main class="p-4">
       <div class="bg-white p-6 rounded-xl shadow-sm">
           <div class="text-center">
               <h2 class="text-2xl font-bold">Wellness Score</h2>
@@ -123,13 +125,14 @@ HOME_HTML = f"""
               <p class="text-gray-600">Good Condition</p>
           </div>
       </div>
-      <!-- Additional content here... -->
     </main>
   </body>
 </html>
 """
 
-# 4) MEASUREMENT PAGE
+# --------------------------
+# 4) Measurement Screen (Placeholder with live camera feed note)
+# --------------------------
 MEASUREMENT_HTML = f"""
 <html>
   {TAILWIND_HEADER}
@@ -161,27 +164,135 @@ MEASUREMENT_HTML = f"""
 </html>
 """
 
+# --------------------------
+# 5) History & Trends Screen (Simulated trend values)
+# --------------------------
+HISTORY_TRENDS_HTML = f"""
+<html>
+  {TAILWIND_HEADER}
+  <body class="min-h-screen bg-white">
+    <header class="fixed top-0 w-full bg-white border-b border-neutral-200 z-50">
+      <div class="flex items-center justify-between px-4 py-3">
+        <h1 class="text-xl font-semibold">History & Trends</h1>
+        <button class="p-2">
+          <i class="fa-solid fa-gear text-neutral-600"></i>
+        </button>
+      </div>
+    </header>
+    <main class="pt-16 pb-20 px-4">
+      <div id="date-filter" class="mb-6 flex items-center justify-between">
+        <select class="bg-white border border-neutral-200 rounded-lg px-4 py-2">
+          <option>Last 7 Days</option>
+          <option>Last 30 Days</option>
+          <option>Last 3 Months</option>
+        </select>
+        <button class="bg-neutral-100 px-4 py-2 rounded-lg">
+          <i class="fa-regular fa-calendar mr-2"></i>Custom Range
+        </button>
+      </div>
+      <div id="vitals-cards" class="space-y-6">
+        <div class="bg-white rounded-xl p-4 shadow-sm">
+          <div class="flex justify-between items-center mb-4">
+            <h2 class="text-lg font-semibold">Blood Pressure</h2>
+            <i class="fa-solid fa-heart-pulse text-neutral-600"></i>
+          </div>
+          <div class="h-[200px] bg-neutral-100 rounded-lg mb-4 flex items-center justify-center">
+            <span class="text-neutral-500">Graph Placeholder</span>
+          </div>
+          <div class="flex justify-between text-sm text-neutral-600">
+            <span>Average: 120/80</span>
+            <span>Highest: 135/88</span>
+            <span>Lowest: 110/70</span>
+          </div>
+        </div>
+        <div class="bg-white rounded-xl p-4 shadow-sm">
+          <div class="flex justify-between items-center mb-4">
+            <h2 class="text-lg font-semibold">Heart Rate</h2>
+            <i class="fa-solid fa-heartbeat text-neutral-600"></i>
+          </div>
+          <div class="h-[200px] bg-neutral-100 rounded-lg mb-4 flex items-center justify-center">
+            <span class="text-neutral-500">Graph Placeholder</span>
+          </div>
+          <div class="flex justify-between text-sm text-neutral-600">
+            <span>Average: 72 bpm</span>
+            <span>Highest: 85 bpm</span>
+            <span>Lowest: 65 bpm</span>
+          </div>
+        </div>
+        <div class="bg-white rounded-xl p-4 shadow-sm">
+          <div class="flex justify-between items-center mb-4">
+            <h2 class="text-lg font-semibold">Oxygen Saturation</h2>
+            <i class="fa-solid fa-lungs text-neutral-600"></i>
+          </div>
+          <div class="h-[200px] bg-neutral-100 rounded-lg mb-4 flex items-center justify-center">
+            <span class="text-neutral-500">Graph Placeholder</span>
+          </div>
+          <div class="flex justify-between text-sm text-neutral-600">
+            <span>Average: 98%</span>
+            <span>Highest: 99%</span>
+            <span>Lowest: 96%</span>
+          </div>
+        </div>
+      </div>
+    </main>
+    <nav id="bottom-nav" class="fixed bottom-0 w-full bg-white border-t border-neutral-200">
+      <div class="flex justify-around py-3">
+        <button class="flex flex-col items-center">
+          <i class="fa-solid fa-house text-neutral-400"></i>
+          <span class="text-xs mt-1">Home</span>
+        </button>
+        <button class="flex flex-col items-center">
+          <i class="fa-solid fa-camera text-neutral-400"></i>
+          <span class="text-xs mt-1">Measure</span>
+        </button>
+        <button class="flex flex-col items-center">
+          <i class="fa-solid fa-chart-line text-neutral-900"></i>
+          <span class="text-xs mt-1">History</span>
+        </button>
+        <button class="flex flex-col items-center">
+          <i class="fa-solid fa-book-medical text-neutral-400"></i>
+          <span class="text-xs mt-1">Learn</span>
+        </button>
+        <button class="flex flex-col items-center">
+          <i class="fa-regular fa-user text-neutral-400"></i>
+          <span class="text-xs mt-1">Profile</span>
+        </button>
+      </div>
+    </nav>
+  </div>
+</body>
+</html>
+"""
+
+# --------------------------
+# 6) (Optional) Settings & Profile Screen (not requested here)
+# --------------------------
+
+# Dictionary of screens
 SCREENS = {
     "Splash": SPLASH_SCREEN_HTML,
     "Onboarding": ONBOARDING_HTML,
     "Home": HOME_HTML,
     "Measurement": MEASUREMENT_HTML,
+    "History & Trends": HISTORY_TRENDS_HTML,
 }
 
 def main():
     st.set_page_config(page_title="Contactless Mobile Vital Signs", layout="wide")
-
-    # 1) Read ?screen=... from the URL
+    # Read query parameter "screen" from URL
     qparams = st.query_params
     screen_param = qparams.get("screen", ["Splash"])[0]
-
-    # 2) If unknown, default to "Splash"
     if screen_param not in SCREENS:
         screen_param = "Splash"
 
-    # 3) Render
-    html_code = SCREENS[screen_param]
-    components.html(html_code, height=900, scrolling=True)
+    # If on the Splash screen, display it then auto-redirect after 3 seconds to Onboarding
+    if screen_param == "Splash":
+        components.html(SCREENS["Splash"], height=900, scrolling=False)
+        time.sleep(3)
+        st.set_query_params(screen="Onboarding")
+        st.experimental_rerun()
+    else:
+        components.html(SCREENS[screen_param], height=900, scrolling=True)
 
 if __name__ == "__main__":
     main()
