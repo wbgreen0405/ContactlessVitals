@@ -1,0 +1,12 @@
+# Python dependencies
+
+opencv-contrib-python
+mediapipe
+opencv-python
+decord
+ffmpeg-python
+torchvision
+catboost
+scikit-optimize
+dask[dataframe]
+skl2onnx
