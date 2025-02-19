@@ -2,7 +2,7 @@ import streamlit as st
 import streamlit.components.v1 as components
 
 # -------------------------------------------------
-# 1) Tailwind + FontAwesome header snippet (common to all pages)
+# 1) Tailwind + FontAwesome + minimal global styles
 # -------------------------------------------------
 TAILWIND_HEADER = """
 <head>
@@ -294,7 +294,9 @@ SETTINGS_HTML = f"""
     </header>
     <main class="p-6">
       <h2 class="text-2xl font-bold mb-4">Customization Options</h2>
-      <p class="text-gray-600">Customize which vital signs to view, change theme colors, and update personal information.</p>
+      <p class="text-gray-600">
+        Customize which vital signs to view, change theme colors, and update personal information.
+      </p>
       <div class="mt-6">
           <label class="block text-gray-700 font-semibold mb-2">Preferred Theme</label>
           <select class="border rounded p-2 w-full">
@@ -324,23 +326,24 @@ def main():
     st.set_page_config(page_title="Contactless Mobile Vital Signs", layout="wide")
     st.title("Contactless Mobile Vital Signs")
 
-    # Read current screen from query parameters (default to "Splash")
+    # 1) Read the query param (e.g. ?screen=Measurement)
+    # Note: st.query_params is now a property (not callable), so we simply use it directly.
     query_params = st.query_params
-    current_screen = query_params.get("screen", ["Splash"])[0]
-    if current_screen not in SCREENS:
-        current_screen = "Splash"
+    screen_param = query_params.get("screen", ["Splash"])[0]
+    if screen_param not in SCREENS:
+        screen_param = "Splash"
 
     # Save current screen in session state (for sidebar navigation)
     if "screen" not in st.session_state:
-        st.session_state["screen"] = current_screen
+        st.session_state["screen"] = screen_param
 
-    # Render the selected screen's HTML
-    html_content = SCREENS[current_screen]
-    components.html(html_content, height=1000, scrolling=True)
+    # 2) Render the selected screen's HTML
+    html_code = SCREENS[st.session_state["screen"]]
+    components.html(html_code, height=1000, scrolling=True)
 
-    # Sidebar navigation (for testing and debugging)
+    # 3) Sidebar navigation (for testing and debugging)
     st.sidebar.markdown("### Navigation")
-    nav_choice = st.sidebar.radio("Go to Screen", list(SCREENS.keys()), index=list(SCREENS.keys()).index(current_screen))
+    nav_choice = st.sidebar.radio("Go to Screen", list(SCREENS.keys()), index=list(SCREENS.keys()).index(st.session_state["screen"]))
     if nav_choice != st.session_state["screen"]:
         st.session_state["screen"] = nav_choice
         st.set_query_params(screen=nav_choice)
