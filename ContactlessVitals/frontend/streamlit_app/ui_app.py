@@ -289,7 +289,7 @@ def main():
     if screen_param == "Splash":
         components.html(SCREENS["Splash"], height=900, scrolling=False)
         time.sleep(3)
-        st.set_query_params(screen="Onboarding")
+        st.experimental_set_query_params(screen="Onboarding")
         st.experimental_rerun()
     else:
         components.html(SCREENS[screen_param], height=900, scrolling=True)
