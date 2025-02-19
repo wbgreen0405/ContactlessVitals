@@ -24,12 +24,11 @@ TAILWIND_HEADER = """
 SPLASH_SCREEN_HTML = f"""
 <html>
   {TAILWIND_HEADER}
-  <!-- 
-    onload sets a timer for 3 seconds (3000 ms).
-    After that, it updates the URL to ?screen=Onboarding.
-  -->
-  <body onload="setTimeout(function(){{ window.location.search='?screen=Onboarding' }}, 3000)"
-        class="min-h-screen bg-gradient-to-br from-blue-200 to-teal-200 flex items-center justify-center">
+  <head>
+    <!-- Redirect to ?screen=Onboarding after 3 seconds -->
+    <meta http-equiv="refresh" content="3; url=?screen=Onboarding" />
+  </head>
+  <body class="min-h-screen bg-gradient-to-br from-blue-200 to-teal-200 flex items-center justify-center">
     <div class="text-center">
       <div class="w-32 h-32 bg-white rounded-full flex items-center justify-center shadow-lg mx-auto">
           <i class="fa-solid fa-heart-pulse text-blue-500 text-5xl"></i>
@@ -41,6 +40,7 @@ SPLASH_SCREEN_HTML = f"""
   </body>
 </html>
 """
+
 
 # 2) ONBOARDING PAGE
 ONBOARDING_HTML = f"""
