@@ -1,44 +1,47 @@
 import streamlit as st
 
-st.set_page_config(layout="wide", page_title="How to Take Measurements")
+# We do NOT rely on user theme now—our config.toml forces light mode.
+# We still set layout=wide and a page title:
+st.set_page_config(
+    page_title="How to Take Measurements",
+    layout="wide"
+)
 
-# Inject CSS to style the page background, top bar, and pinned footer
+# 1) Inject extra CSS to do the pinned footer, top bar layout, etc.
 st.markdown("""
 <style>
-/* Overall page background - near-white */
-body {
-    background-color: #F9FAFB;
-    margin: 0;
-    padding: 0;
-    font-family: sans-serif;
-}
-/* Remove default Streamlit padding */
+/* Since config.toml enforces light theme, 
+   we can trust the background to be #F9FAFB or #FFFFFF. */
+
+/* Remove extra Streamlit padding */
 main .block-container {
     padding: 0 !important;
+    margin: 0 !important;
 }
 
-/* A top bar container for arrow (left) + skip (right) */
+/* Top bar container (arrow left, skip right) */
 .top-bar {
     display: flex;
-    align-items: center;
     justify-content: space-between;
+    align-items: center;
     padding: 1rem 1.5rem;
-    background: transparent;  /* or #F9FAFB if you want a small bar color */
+    background-color: #F9FAFB;
 }
-/* Left arrow button styling (HTML) */
+/* Arrow button (HTML) */
 .arrow-btn {
     background: none;
     border: none;
     cursor: pointer;
+    outline: none;
     padding: 0;
 }
 .arrow-btn:hover {
     opacity: 0.8;
 }
-/* We'll place the skip button in the top bar using a column approach. 
-   But we can also do an absolute or flex approach. */
+/* We'll place the Streamlit skip button in the same row using columns. 
+   Or we can do a plain HTML button if you prefer. */
 
-/* Centered heading container */
+/* Center heading area */
 .header-text {
     text-align: center;
     margin-top: 1rem;
@@ -56,10 +59,10 @@ main .block-container {
     margin: 0 auto;
 }
 
-/* Carousel container styling */
+/* Carousel container (white card) */
 .carousel-wrapper {
     max-width: 600px;
-    margin: 2rem auto 4rem auto; /* 4rem bottom to leave space for the footer button */
+    margin: 2rem auto 5rem auto; /* extra bottom space for pinned footer */
     background-color: #FFFFFF;
     border-radius: 0.5rem;
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
@@ -67,40 +70,41 @@ main .block-container {
     position: relative;
 }
 
-/* The "Got It, Let's Start" pinned footer */
+/* The pinned bright-blue footer at bottom */
 .footer-bar {
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
-    background-color: #3B82F6;  /* Tailwind primary-500 */
+    background-color: #3B82F6; /* bright blue */
     padding: 1rem;
     text-align: center;
-    z-index: 999; /* ensure it stays on top */
+    z-index: 999;
+    margin: 0;
 }
-.footer-btn {
-    display: inline-block;
-    background-color: #3B82F6;
-    color: #fff;
-    border: none;
-    border-radius: 0.5rem;
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
-    font-weight: 500;
+
+/* Make st.button full-width inside the pinned bar if desired */
+.footer-btn-container button {
+    width: 100% !important;
+    background-color: #3B82F6 !important;
+    color: #FFFFFF !important;
+    font-size: 1rem !important;
+    font-weight: 500 !important;
+    border-radius: 0.5rem !important;
+    border: none !important;
+    padding: 0.75rem 1.5rem !important;
+    margin: 0 !important;
     cursor: pointer;
-    transition: background-color 0.2s ease-in-out;
 }
-.footer-btn:hover {
-    background-color: #2563EB; /* Tailwind primary-600 */
+.footer-btn-container button:hover {
+    background-color: #2563EB !important; /* darker blue on hover */
 }
 </style>
 """, unsafe_allow_html=True)
 
-##############################
-# 1) Top bar: Arrow on the left, "Skip" on the right
-##############################
-
-# We create a row with HTML for the arrow, and a Streamlit button for skip
+#############################
+# 2) TOP BAR: arrow on left, skip on right
+#############################
 st.markdown(
     """
     <div class="top-bar">
@@ -119,23 +123,24 @@ st.markdown(
           </path>
         </svg>
       </button>
-    </div>
     """,
     unsafe_allow_html=True
 )
 
-# Right side: "Skip" as a real Streamlit button
-# We'll float it to the right by placing it in the same top row with negative margin, or just do st.columns
-col1, col2 = st.columns([0.85, 0.15])
+# Place "Skip" as a real Streamlit button on the top right
+col1, col2 = st.columns([0.9, 0.1])
 with col1:
     st.write("")
 with col2:
     if st.button("Skip"):
         st.warning("Skipping tutorial... (placeholder)")
 
-##############################
-# 2) Main heading & subtitle
-##############################
+# Close the top-bar div
+st.markdown("</div>", unsafe_allow_html=True)
+
+#############################
+# 3) Heading & subheading
+#############################
 st.markdown(
     """
     <div class="header-text">
@@ -146,9 +151,9 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-##############################
-# 3) Carousel
-##############################
+#############################
+# 4) Carousel (white card)
+#############################
 carousel_html = """
 <div id="default-carousel" class="carousel-wrapper">
   <div style="position: relative; height: 300px; overflow: hidden;">
@@ -242,23 +247,19 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 """
-
 st.markdown(carousel_html, unsafe_allow_html=True)
 
-##############################
-# 4) Fixed bottom bar: "Got It, Let's Start"
-##############################
-# We place an empty <div> for the bar, then the real Streamlit button that we style.
-# Alternatively, we can do a plain HTML button. But let's do a real Streamlit button.
-footer_bar_html = """
-<div class="footer-bar">
-</div>
-"""
-st.markdown(footer_bar_html, unsafe_allow_html=True)
-
-# Place the actual Streamlit button
-center_col = st.columns([1,2,1])[1]  # center column
-with center_col:
-    got_it = st.button("Got It, Let's Start")
-    if got_it:
-        st.success("Tutorial complete! (placeholder)")
+#############################
+# 5) Pinned footer with "Got It, Let's Start"
+#############################
+st.markdown('<div class="footer-bar">', unsafe_allow_html=True)
+# We create a container for the button. 
+# We'll place the real st.button in a column so it's 100% wide.
+colA, colB, colC = st.columns([0.15, 0.7, 0.15])
+with colB:
+    with st.container():
+        st.markdown('<div class="footer-btn-container">', unsafe_allow_html=True)
+        if st.button("Got It, Let's Start"):
+            st.success("Tutorial complete! (placeholder)")
+        st.markdown('</div>', unsafe_allow_html=True)
+st.markdown('</div>', unsafe_allow_html=True)
