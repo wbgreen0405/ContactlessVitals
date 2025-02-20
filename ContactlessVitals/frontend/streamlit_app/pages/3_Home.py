@@ -2,40 +2,48 @@ import streamlit as st
 
 st.set_page_config(page_title="How to Take Measurements", layout="wide")
 
-# 1) Inject CSS for a light background, pinned footer, and centered wide button
+# 1) Global CSS
 st.markdown("""
 <style>
-/* Force a near-white background */
+/* Force a light background */
 body, [data-testid="stAppViewContainer"], [data-testid="stApp"] {
     background-color: #F9FAFB !important;
-    margin: 0;
-    padding: 0;
+    margin: 0; padding: 0;
     font-family: sans-serif;
 }
-/* Remove default Streamlit top/bottom padding, add bottom space for pinned footer */
+/* Remove default top/bottom padding, leave space for pinned footer */
 main .block-container {
     padding-top: 1rem !important;
-    padding-bottom: 6rem !important; /* space for pinned footer */
+    padding-bottom: 6rem !important; /* ensures content not hidden by footer */
 }
-/* Pinned bright-blue footer at bottom */
+/* Top bar container: flex row, arrow on left, skip on right */
+.top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1.5rem;
+    margin-bottom: 1rem;
+}
+/* Pinned footer at bottom */
 .footer-fixed {
     position: fixed;
     bottom: 0; left: 0; right: 0;
     background-color: #3B82F6; /* bright blue */
     padding: 1rem;
-    text-align: center;  /* center the button horizontally */
+    text-align: center;
     z-index: 9999;
     margin: 0;
 }
-/* Style the button in the pinned footer */
+/* Center the button in the pinned footer, make it wide */
 .footer-fixed .stButton button {
-    width: 100% !important;       /* Make button wide */
-    max-width: 300px;            /* Optionally limit how wide it can get */
-    margin: 0 auto !important;   /* Center the button horizontally */
+    display: block;
+    margin: 0 auto;
+    width: 100% !important;
+    max-width: 300px; /* limit maximum width */
     background-color: #3B82F6 !important;
     color: #FFFFFF !important;
-    font-size: 1rem !important;  /* text-base */
-    font-weight: 500 !important; /* font-medium */
+    font-size: 1rem !important;
+    font-weight: 500 !important;
     border-radius: 0.5rem !important;
     border: none !important;
     padding: 0.75rem 1.5rem !important;
@@ -44,31 +52,70 @@ main .block-container {
 .footer-fixed .stButton button:hover {
     background-color: #2563EB !important;
 }
+/* Card styling (for the 3 steps) */
+.card {
+    background-color: #FFFFFF;
+    border: 1px solid #E5E7EB;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    border-radius: 0.5rem;
+    padding: 2rem;
+    text-align: center; /* center icons and text */
+    max-width: 600px;
+    margin: 0 auto;     /* center horizontally */
+}
 </style>
 """, unsafe_allow_html=True)
 
-# 2) Top Bar: arrow on left, skip on right
-col1, col2, col3 = st.columns([0.1, 0.8, 0.1])
+######################
+# 2) Top Bar
+######################
+st.markdown(
+    """
+    <div class="top-bar">
+      <!-- Left arrow as plain HTML -->
+      <button type="button" style="background:none; border:none; cursor:pointer;"
+              onclick="alert('Back arrow clicked (placeholder)')">
+        <svg style="width:24px; height:24px; color:#111827;" 
+             xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" 
+                d="M9.707 16.707a1 1 0 01-1.414 
+                   0l-6-6a1 1 0 010-1.414l6-6a1 
+                   1 0 011.414 1.414L5.414 
+                   9H17a1 1 0 110 2H5.414l4.293 
+                   4.293a1 1 0 010 1.414z" 
+                clip-rule="evenodd"/>
+        </svg>
+      </button>
+    """,
+    unsafe_allow_html=True
+)
+# Right side "Skip" as a real Streamlit button
+col1, col2 = st.columns([0.85, 0.15])
 with col1:
-    # Arrow button on the left
-    if st.button("←"):
-        st.info("Back arrow clicked (placeholder)")
+    st.write("")
 with col2:
-    st.write("")  # empty center
-with col3:
-    # "Skip" on the right
     if st.button("Skip"):
         st.warning("Skipping tutorial... (placeholder)")
+# Close the top-bar div
+st.markdown("</div>", unsafe_allow_html=True)
 
-# 3) Heading & Subtitle (centered)
+######################
+# 3) Heading & Subtitle
+######################
 st.markdown("""
-<div style="text-align: center; margin-top: 1rem; margin-bottom: 1.5rem;">
-  <h1 style="font-size: 1.875rem; font-weight: 700; color: #111827;">How to Take Measurements</h1>
-  <p style="font-size: 1rem; color: #4B5563;">Follow these steps for accurate readings</p>
+<div style="text-align: center; margin-bottom: 1.5rem;">
+  <h1 style="font-size: 1.875rem; font-weight: 700; color: #111827;">
+    How to Take Measurements
+  </h1>
+  <p style="font-size: 1rem; color: #4B5563;">
+    Follow these steps for accurate readings
+  </p>
 </div>
 """, unsafe_allow_html=True)
 
-# 4) Steps in a single card, each with an icon, title, and description (all centered)
+######################
+# 4) Steps in a Single Centered Card
+######################
 steps = [
     {
         "icon": """<svg style="width:64px; height:64px; color:#3B82F6; display:block; margin:0 auto;"
@@ -123,34 +170,23 @@ steps = [
     }
 ]
 
-# Center the card
-card_col = st.columns([1, 2, 1])[1]
-with card_col:
-    st.markdown("""
-    <div style="
-      background-color: #FFFFFF;
-      border: 1px solid #E5E7EB;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-      border-radius: 0.5rem;
-      padding: 2rem;
-      text-align: center;">
+# Card container
+st.markdown('<div class="card">', unsafe_allow_html=True)
+for step in steps:
+    st.markdown(step["icon"], unsafe_allow_html=True)
+    st.markdown(f"""
+    <h4 style="font-size:1.25rem; font-weight:700; color:#374151; margin-top:0.75rem;">
+      {step['title']}
+    </h4>
+    <p style="font-size:1rem; color:#4B5563; margin-top:0.25rem; margin-bottom:1.75rem;">
+      {step['description']}
+    </p>
     """, unsafe_allow_html=True)
+st.markdown('</div>', unsafe_allow_html=True)
 
-    # Display each step stacked, with centered icon, title, and text
-    for step in steps:
-        st.markdown(step["icon"], unsafe_allow_html=True)
-        st.markdown(f"""
-        <h4 style="font-size:1.25rem; font-weight:700; color:#374151; margin-top:0.75rem;">
-          {step['title']}
-        </h4>
-        <p style="font-size:1rem; color:#4B5563; margin-top:0.25rem; margin-bottom:1.75rem;">
-          {step['description']}
-        </p>
-        """, unsafe_allow_html=True)
-
-    st.markdown("</div>", unsafe_allow_html=True)
-
-# 5) Pinned Footer: "Got It, Let's Start" (centered, wide, bright blue)
+######################
+# 5) Pinned Footer: "Got It, Let's Start"
+######################
 st.markdown('<div class="footer-fixed">', unsafe_allow_html=True)
 if st.button("Got It, Let's Start"):
     st.success("Tutorial complete! (placeholder)")
