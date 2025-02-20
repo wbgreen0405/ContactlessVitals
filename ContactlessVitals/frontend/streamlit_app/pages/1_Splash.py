@@ -1,8 +1,9 @@
 import streamlit as st
 
+# Must be the first Streamlit command
 st.set_page_config(page_title="Splash", layout="wide")
 
-# Optionally hide Streamlit’s sidebar:
+# Optionally hide Streamlit’s sidebar
 st.markdown(
     """
     <style>
@@ -15,7 +16,6 @@ st.markdown(
 splash_html = """
 <html>
 <head>
-  <!-- If you need Font Awesome from a CDN: -->
   <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
         integrity="sha512-..."
@@ -23,25 +23,26 @@ splash_html = """
         referrerpolicy="no-referrer" />
   <style>
     body {
-      margin:0; padding:0;
+      margin: 0; padding: 0;
       font-family: sans-serif;
+      background: linear-gradient(to bottom right, #ccefff, #ccffe0);
     }
     .splash-container {
       min-height: 100vh;
-      background: linear-gradient(to bottom right, #ccefff, #ccffe0);
       display: flex;
       align-items: center;
       justify-content: center;
     }
-    /* The anchor covers the entire container */
+    /* Anchor covers the entire area, no underline, same tab */
     .full-link {
+      text-decoration: none;
+      color: inherit;
       display: block;
-      width: 100%;
-      height: 100%;
       text-align: center;
-      text-decoration: none; /* remove underline */
-      color: inherit;        /* let text color inherit */
       padding: 2rem;
+    }
+    .full-link:hover {
+      text-decoration: none; /* ensure no underline on hover */
     }
     .white-circle {
       width: 8rem; height: 8rem;
@@ -52,6 +53,10 @@ splash_html = """
       justify-content: center;
       margin: 0 auto;
       box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+    .icon-heart {
+      font-size: 3rem;
+      color: #3b82f6; /* a nice blue color */
     }
     .title {
       font-size: 2.5rem;
@@ -70,13 +75,12 @@ splash_html = """
   </style>
 </head>
 <body>
-  <!-- Entire container -->
   <div class="splash-container">
-    <!-- Anchor link that navigates to the next page -->
-    <a class="full-link" href="/2_Onboarding">
+    <!-- Anchor link that navigates in the same tab -->
+    <!-- Use target="_self" to ensure same tab. Adjust href to your actual page. -->
+    <a class="full-link" href="?page=Onboarding" target="_self">
       <div class="white-circle">
-        <!-- Heart icon (Font Awesome) -->
-        <i class="fa-solid fa-heart" style="font-size:3rem; color:#3b82f6;"></i>
+        <i class="fa-solid fa-heart icon-heart"></i>
       </div>
       <h1 class="title">VitalScan</h1>
       <p class="subtitle">Contactless Health Monitoring</p>
