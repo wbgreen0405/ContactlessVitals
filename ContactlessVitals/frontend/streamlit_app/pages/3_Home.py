@@ -2,7 +2,7 @@ import streamlit as st
 
 st.set_page_config(page_title="How to Take Measurements", layout="wide")
 
-# Inject CSS
+# 1) Global CSS for layout & pinned footer
 st.markdown("""
 <style>
 /* Force a light background */
@@ -16,7 +16,7 @@ main .block-container {
     padding-top: 1rem !important;
     padding-bottom: 6rem !important; 
 }
-/* Top bar: arrow left, skip right */
+/* A top bar for arrow (left) + skip (right) */
 .top-bar {
     display: flex;
     align-items: center;
@@ -24,11 +24,11 @@ main .block-container {
     padding: 0 1.5rem;
     margin-bottom: 1rem;
 }
-/* Pinned footer at bottom, bright blue background */
+/* The pinned bright-blue footer at bottom */
 .footer-fixed {
     position: fixed;
     bottom: 0; left: 0; right: 0;
-    background-color: #3B82F6;
+    background-color: #3B82F6; /* bright blue */
     padding: 1rem;
     text-align: center;
     z-index: 9999;
@@ -52,26 +52,30 @@ main .block-container {
 .footer-fixed .stButton button:hover {
     background-color: #2563EB !important;
 }
-/* Main card that holds all steps, centered horizontally */
+/* A centered container for the heading & steps */
+.center-container {
+    max-width: 600px;      /* optional: limit total width */
+    margin: 0 auto;        /* center horizontally */
+    text-align: center;    /* center all text/icons inside */
+}
+/* The white card that holds the steps */
 .card {
     background-color: #FFFFFF;
     border: 1px solid #E5E7EB;
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     border-radius: 0.5rem;
     padding: 2rem;
-    max-width: 600px;
-    margin: 0 auto;  /* center horizontally */
-    text-align: center; /* center icons & text inside */
+    margin-top: 1rem;
 }
 </style>
 """, unsafe_allow_html=True)
 
 #####################################
-# Top Bar
+# 2) Top Bar
 #####################################
 st.markdown("""
 <div class="top-bar">
-  <!-- Left arrow (pure HTML). If you need a Python callback, replace with st.button -->
+  <!-- Left arrow as plain HTML -->
   <button type="button" style="background:none; border:none; cursor:pointer;"
           onclick="alert('Back arrow clicked (placeholder)')">
     <svg style="width:24px; height:24px; color:#111827;" 
@@ -99,22 +103,23 @@ with col2:
 st.markdown("</div>", unsafe_allow_html=True)
 
 #####################################
-# Heading & Subtitle (centered)
+# 3) Centered Container for Heading + Card
 #####################################
+st.markdown('<div class="center-container">', unsafe_allow_html=True)
+
+# Heading & Subtitle
 st.markdown("""
-<div style="text-align: center; margin-bottom: 1.5rem;">
-  <h1 style="font-size: 1.875rem; font-weight: 700; color: #111827;">
-    How to Take Measurements
-  </h1>
-  <p style="font-size: 1rem; color: #4B5563;">
-    Follow these steps for accurate readings
-  </p>
-</div>
+<h1 style="font-size: 1.875rem; font-weight: 700; color: #111827; margin-bottom: 0.5rem;">
+  How to Take Measurements
+</h1>
+<p style="font-size: 1rem; color: #4B5563; margin-bottom: 1.5rem;">
+  Follow these steps for accurate readings
+</p>
 """, unsafe_allow_html=True)
 
-#####################################
-# Steps in a single centered card
-#####################################
+# Steps in a single card
+st.markdown('<div class="card">', unsafe_allow_html=True)
+
 steps = [
     {
         "icon": """<svg style="width:64px; height:64px; color:#3B82F6; margin:0 auto;"
@@ -169,8 +174,6 @@ steps = [
     }
 ]
 
-# Create the card
-st.markdown('<div class="card">', unsafe_allow_html=True)
 for step in steps:
     st.markdown(step["icon"], unsafe_allow_html=True)
     st.markdown(f"""
@@ -181,10 +184,13 @@ for step in steps:
       {step['description']}
     </p>
     """, unsafe_allow_html=True)
-st.markdown('</div>', unsafe_allow_html=True)
+
+st.markdown("</div>", unsafe_allow_html=True)  # close .card
+
+st.markdown("</div>", unsafe_allow_html=True)  # close .center-container
 
 #####################################
-# Pinned Footer
+# 4) Pinned Footer
 #####################################
 st.markdown('<div class="footer-fixed">', unsafe_allow_html=True)
 if st.button("Got It, Let's Start"):
