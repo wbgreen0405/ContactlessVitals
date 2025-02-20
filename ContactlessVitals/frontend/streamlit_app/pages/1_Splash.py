@@ -1,98 +1,115 @@
 import streamlit as st
 
-# 1. Set page to wide layout to remove some default spacing
 st.set_page_config(layout="wide")
 
-# 2. Inject custom CSS to override Streamlit’s default padding
-st.markdown(
-    """
-    <style>
-    /* Remove padding from top and bottom of the main block container */
-    .main .block-container {
-        padding-top: 0 !important;
-        padding-bottom: 0 !important;
-    }
-    /* Our container styling */
-    .container {
-        min-height: 100vh;
-        margin: 0; 
-        padding: 0; 
-        background: linear-gradient(to bottom, #eff6ff, #ffffff);
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-    }
-    .header {
-        text-align: center;
-        margin-top: 0; /* Remove any top margin */
-        padding-top: 2rem; /* If you need a little space, adjust here */
-    }
-    .header h1 {
-        font-size: 2.5rem;
-        font-weight: 800;
-        margin-bottom: 0.5rem;
-    }
-    .header p {
-        font-size: 1.25rem;
-        font-weight: 300;
-        margin-bottom: 1.5rem;
-    }
-    .header img {
-        width: 100%;
-        max-width: 400px;
-        height: auto;
-        border-radius: 0.5rem;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    }
-    .card {
-        max-width: 600px;
-        margin: 2rem auto;
-        background: rgba(255,255,255,0.8);
-        backdrop-filter: blur(10px);
-        border: 1px solid #e5e7eb;
-        border-radius: 0.5rem;
-        padding: 24px;
-    }
-    .icon-section {
-        display: flex;
-        justify-content: center;
-        gap: 32px;
-        margin-top: 16px;
-    }
-    .icon-section div {
-        text-align: center;
-    }
-    .buttons {
-        max-width: 600px;
-        margin: 2rem auto;
-        text-align: center;
-    }
-    .buttons button {
-        width: 100%;
-        padding: 12px 0;
-        margin-bottom: 16px;
-        border: none;
-        border-radius: 0.5rem;
-        font-size: 1rem;
-        cursor: pointer;
-    }
-    .primary {
-        background-color: #3b82f6;
-        color: white;
-    }
-    .link {
-        background: transparent;
-        color: #3b82f6;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
+# Inject custom CSS to remove Streamlit’s default top spacing and remove all margin/padding
+st.markdown("""
+<style>
+/* Remove default padding/margins on html and body */
+html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    height: 100% !important;
+}
 
-# Begin layout container
+/* Streamlit main app container adjustments */
+[data-testid="stAppViewContainer"], [data-testid="stApp"] {
+    padding: 0 !important;
+    margin: 0 !important;
+    height: 100% !important;
+    background: none !important;
+}
+
+/* Optionally remove the top/bottom white bar if your theme has them */
+.block-container, .main .block-container {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    margin: 0 !important;
+}
+
+/* Our custom container with the gradient background */
+.container {
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to bottom, #eff6ff, #ffffff);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* Remove extra margin from the header */
+.header {
+    text-align: center;
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+/* Additional styling */
+.header h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+}
+.header p {
+    font-size: 1.25rem;
+    font-weight: 300;
+    margin-bottom: 1.5rem;
+}
+.header img {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+.card {
+    max-width: 600px;
+    margin: 2rem auto;
+    background: rgba(255,255,255,0.8);
+    backdrop-filter: blur(10px);
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    padding: 24px;
+}
+.icon-section {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    margin-top: 16px;
+}
+.icon-section div {
+    text-align: center;
+}
+.buttons {
+    max-width: 600px;
+    margin: 2rem auto;
+    text-align: center;
+}
+.buttons button {
+    width: 100%;
+    padding: 12px 0;
+    margin-bottom: 16px;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+}
+.primary {
+    background-color: #3b82f6;
+    color: white;
+}
+.link {
+    background: transparent;
+    color: #3b82f6;
+}
+</style>
+""", unsafe_allow_html=True)
+
+# Build the layout
 st.markdown('<div class="container">', unsafe_allow_html=True)
 
-# Header Section: Title, description and image
 st.markdown(
     """
     <div class="header">
@@ -104,7 +121,6 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# Card Section: Icon cards for vital signs
 st.markdown(
     """
     <div class="card">
@@ -133,7 +149,6 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# Buttons Section
 st.markdown(
     """
     <div class="buttons">
@@ -144,5 +159,4 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# End container
 st.markdown('</div>', unsafe_allow_html=True)
