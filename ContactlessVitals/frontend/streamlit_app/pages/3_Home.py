@@ -5,10 +5,11 @@ st.set_page_config(page_title="How to Measure Your Vitals", layout="wide")
 # Inject custom CSS
 st.markdown("""
 <style>
-/* White background for the entire page */
+/* Light background (or transparent if desired). 
+   Change #F9FAFB to 'transparent' if you want no background at all. */
 body, [data-testid="stAppViewContainer"], [data-testid="stApp"], .block-container {
-    background-color: #FFFFFF !important;
-    margin: 0;
+    background-color: #F9FAFB !important; 
+    margin: 0; 
     padding: 0;
     font-family: sans-serif;
 }
@@ -16,19 +17,19 @@ body, [data-testid="stAppViewContainer"], [data-testid="stApp"], .block-containe
 /* Remove default top/bottom padding, leave space for pinned footer */
 main .block-container {
     padding-top: 2rem !important;
-    padding-bottom: 6rem !important; /* space for pinned footer */
+    padding-bottom: 6rem !important; 
 }
 
 /* Centered container for heading & steps */
 .center-container {
-    max-width: 700px;
-    margin: 0 auto;
+    max-width: 700px; 
+    margin: 0 auto; 
     text-align: center;
 }
 
 /* Heading style */
 .center-container h1 {
-    font-size: 1.875rem; /* ~ text-3xl */
+    font-size: 1.875rem;  /* ~ text-3xl */
     font-weight: 700;
     color: #111827;
     margin-bottom: 0.5rem;
@@ -39,36 +40,37 @@ main .block-container {
     margin-bottom: 2rem;
 }
 
-/* A wrapper for the step cards */
+/* Steps container (vertical stack, centered) */
 .steps-wrapper {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem; /* spacing between cards */
-    align-items: center; /* center each card horizontally */
+    gap: 1.5rem;
+    align-items: center; /* center each step horizontally */
 }
 
-/* Each step card, stacked & centered */
+/* Each step "card" - no background, minimal border, everything stacked */
 .step-card {
-    background-color: #FFFFFF;
-    border: 1px solid #E5E7EB;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+    border: 1px solid #E5E7EB;   /* or remove if you want zero border */
     border-radius: 0.5rem;
     padding: 2rem;
     width: 100%;
-    max-width: 600px; /* narrower card width */
+    max-width: 600px;
     display: flex;
-    flex-direction: column; /* stack step number, image, text */
+    flex-direction: column; /* stack number, image, text vertically */
     align-items: center;    /* center horizontally */
     text-align: center;     /* center text inside */
+    background-color: transparent; /* no white background */
+    box-shadow: none;       /* remove any shadow */
+    position: relative;
 }
 
-/* Step number badge at the top */
+/* Step number badge at the top (slightly bigger circle) */
 .step-badge {
     background-color: #E5E7EB;
     color: #111827;
     width: 2rem;
     height: 2rem;
-    border-radius: 9999px;
+    border-radius: 9999px; 
     display: flex;
     align-items: center;
     justify-content: center;
@@ -147,7 +149,7 @@ st.markdown("""
 # Steps container
 st.markdown('<div class="steps-wrapper">', unsafe_allow_html=True)
 
-# Step data
+# Example step data
 steps = [
     {
         "step_num": "1",
@@ -169,7 +171,7 @@ steps = [
     },
 ]
 
-# Render each step as a fully centered card
+# Render each step as a minimal "card"
 for step in steps:
     st.markdown(f"""
     <div class="step-card">
