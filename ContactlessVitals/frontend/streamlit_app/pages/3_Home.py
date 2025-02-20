@@ -2,7 +2,7 @@ import streamlit as st
 
 st.set_page_config(page_title="How to Measure Your Vitals", layout="wide")
 
-# Inject custom CSS for layout, cards, pinned footer, etc.
+# Inject custom CSS
 st.markdown("""
 <style>
 /* White background for the entire page */
@@ -13,10 +13,10 @@ body, [data-testid="stAppViewContainer"], [data-testid="stApp"], .block-containe
     font-family: sans-serif;
 }
 
-/* Remove extra top/bottom padding, add space for pinned footer */
+/* Remove default top/bottom padding, leave space for pinned footer */
 main .block-container {
     padding-top: 2rem !important;
-    padding-bottom: 6rem !important; /* space above pinned footer */
+    padding-bottom: 6rem !important; /* space for pinned footer */
 }
 
 /* Centered container for heading & steps */
@@ -28,82 +28,76 @@ main .block-container {
 
 /* Heading style */
 .center-container h1 {
-    font-size: 1.875rem;  /* ~ text-3xl */
+    font-size: 1.875rem; /* ~ text-3xl */
     font-weight: 700;
     color: #111827;
     margin-bottom: 0.5rem;
 }
 .center-container p.subtitle {
-    font-size: 1rem;      /* text-base */
+    font-size: 1rem; /* text-base */
     color: #4B5563;
     margin-bottom: 2rem;
 }
 
-/* Container that holds the 3 steps (stacked) */
+/* A wrapper for the step cards */
 .steps-wrapper {
     display: flex;
     flex-direction: column;
     gap: 1.5rem; /* spacing between cards */
+    align-items: center; /* center each card horizontally */
 }
 
-/* Each step card */
+/* Each step card, stacked & centered */
 .step-card {
     background-color: #FFFFFF;
     border: 1px solid #E5E7EB;
     box-shadow: 0 2px 4px rgba(0,0,0,0.08);
     border-radius: 0.5rem;
     padding: 2rem;
+    width: 100%;
+    max-width: 600px; /* narrower card width */
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: relative;
+    flex-direction: column; /* stack step number, image, text */
+    align-items: center;    /* center horizontally */
+    text-align: center;     /* center text inside */
 }
 
-/* Step number badge in top-left corner */
+/* Step number badge at the top */
 .step-badge {
-    position: absolute;
-    top: 1rem;
-    left: 1rem;
     background-color: #E5E7EB;
     color: #111827;
     width: 2rem;
     height: 2rem;
-    border-radius: 9999px; /* circle */
+    border-radius: 9999px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 0.875rem;
     font-weight: 600;
+    margin-bottom: 1rem;
 }
 
-/* Step text container (title + description) */
-.step-text {
-    flex: 1;
-    text-align: left;
-    margin-right: 1.5rem; /* space between text and image */
-}
-
-/* Step title */
-.step-title {
-    font-size: 1.125rem; /* ~ text-lg */
-    font-weight: 700;
-    color: #111827;
-    margin-bottom: 0.5rem;
-}
-/* Step description */
-.step-desc {
-    font-size: 1rem;
-    color: #4B5563;
-    line-height: 1.4;
-}
-
-/* Step image on the right side (bigger than 80px) */
+/* Step image in the middle */
 .step-image {
     width: 140px;
     height: 100px;
     object-fit: cover;
     border-radius: 0.25rem;
     background-color: #F9FAFB;
+    margin-bottom: 1rem;
+}
+
+/* Step title & description below the image */
+.step-title {
+    font-size: 1.125rem; /* ~ text-lg */
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 0.5rem;
+}
+.step-desc {
+    font-size: 1rem;
+    color: #4B5563;
+    line-height: 1.4;
 }
 
 /* Pinned footer at the bottom (blue bar) */
@@ -175,16 +169,14 @@ steps = [
     },
 ]
 
-# Render each step as a "card"
+# Render each step as a fully centered card
 for step in steps:
     st.markdown(f"""
     <div class="step-card">
       <div class="step-badge">{step['step_num']}</div>
-      <div class="step-text">
-        <div class="step-title">{step['title']}</div>
-        <div class="step-desc">{step['description']}</div>
-      </div>
       <img src="{step['image_url']}" alt="Step image" class="step-image" />
+      <div class="step-title">{step['title']}</div>
+      <div class="step-desc">{step['description']}</div>
     </div>
     """, unsafe_allow_html=True)
 
@@ -198,4 +190,3 @@ st.markdown('<div class="footer-fixed">', unsafe_allow_html=True)
 if st.button("Got It, Let’s Start"):
     st.success("Tutorial complete! (placeholder)")
 st.markdown("</div>", unsafe_allow_html=True)
-
