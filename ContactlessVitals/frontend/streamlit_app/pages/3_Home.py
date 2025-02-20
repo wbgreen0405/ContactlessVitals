@@ -2,65 +2,120 @@ import streamlit as st
 
 st.set_page_config(layout="wide", page_title="How to Take Measurements")
 
-# 1) Inject CSS to style background, remove extra padding, etc.
+# Inject CSS to style the page background, top bar, and pinned footer
 st.markdown("""
 <style>
-/* Light gray background, like Tailwind's bg-gray-50 */
+/* Overall page background - near-white */
 body {
     background-color: #F9FAFB;
     margin: 0;
     padding: 0;
     font-family: sans-serif;
 }
-/* Remove some Streamlit padding */
+/* Remove default Streamlit padding */
 main .block-container {
-    padding-top: 1rem !important;
-    padding-bottom: 1rem !important;
+    padding: 0 !important;
 }
-/* Make the bottom bar 'fixed' at the bottom */
-.footer-bar {
-    position: fixed; 
-    bottom: 0; 
-    left: 0; 
-    right: 0; 
-    background-color: #FFFFFF; 
-    border-top: 1px solid #E5E7EB; 
-    padding: 1rem;
-}
-/* A container for the top bar (arrow + skip) */
+
+/* A top bar container for arrow (left) + skip (right) */
 .top-bar {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    margin-bottom: 1rem;
+    justify-content: space-between;
+    padding: 1rem 1.5rem;
+    background: transparent;  /* or #F9FAFB if you want a small bar color */
 }
-.icon-button {
+/* Left arrow button styling (HTML) */
+.arrow-btn {
     background: none;
     border: none;
     cursor: pointer;
+    padding: 0;
 }
-.icon-button:hover {
-    opacity: 0.7;
+.arrow-btn:hover {
+    opacity: 0.8;
+}
+/* We'll place the skip button in the top bar using a column approach. 
+   But we can also do an absolute or flex approach. */
+
+/* Centered heading container */
+.header-text {
+    text-align: center;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+.header-text h1 {
+    font-size: 1.875rem; /* text-3xl */
+    font-weight: 700;    /* font-bold */
+    color: #111827;      /* near-black text */
+    margin-bottom: 0.5rem;
+}
+.header-text p {
+    font-size: 1rem;     /* text-base */
+    color: #4B5563;      /* text-base-600 */
+    margin: 0 auto;
+}
+
+/* Carousel container styling */
+.carousel-wrapper {
+    max-width: 600px;
+    margin: 2rem auto 4rem auto; /* 4rem bottom to leave space for the footer button */
+    background-color: #FFFFFF;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    padding: 1rem;
+    position: relative;
+}
+
+/* The "Got It, Let's Start" pinned footer */
+.footer-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #3B82F6;  /* Tailwind primary-500 */
+    padding: 1rem;
+    text-align: center;
+    z-index: 999; /* ensure it stays on top */
+}
+.footer-btn {
+    display: inline-block;
+    background-color: #3B82F6;
+    color: #fff;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+.footer-btn:hover {
+    background-color: #2563EB; /* Tailwind primary-600 */
 }
 </style>
 """, unsafe_allow_html=True)
 
-# 2) Header with "Back Arrow" + "Skip" 
-#    We'll do a small HTML snippet for the arrow icon
-#    Then a real Streamlit button for "Skip".
+##############################
+# 1) Top bar: Arrow on the left, "Skip" on the right
+##############################
+
+# We create a row with HTML for the arrow, and a Streamlit button for skip
 st.markdown(
     """
     <div class="top-bar">
-      <!-- Back arrow (pure HTML). 
-           If you want to handle a click in Python, replace with st.button. -->
-      <button class="icon-button" type="button">
-        <svg style="width:24px; height:24px; color:#111827;" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-          <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 
-            0l-6-6a1 1 0 010-1.414l6-6a1 
-            1 0 011.414 1.414L5.414 
-            9H17a1 1 0 110 2H5.414l4.293 
-            4.293a1 1 0 010 1.414z" 
-            clip-rule="evenodd">
+      <!-- Left arrow (HTML) -->
+      <button class="arrow-btn" type="button">
+        <svg style="width:24px; height:24px; color:#111827;" 
+             xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" 
+                d="M9.707 16.707a1 1 0 
+                   01-1.414 0l-6-6a1 1 0 
+                   010-1.414l6-6a1 1 0 
+                   011.414 1.414L5.414 
+                   9H17a1 1 0 110 2H5.414l4.293 
+                   4.293a1 1 0 010 1.414z" 
+                clip-rule="evenodd">
           </path>
         </svg>
       </button>
@@ -69,39 +124,33 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# "Skip" as a real Streamlit button (right-aligned). 
-# We'll float it or just place it in the same row using columns:
+# Right side: "Skip" as a real Streamlit button
+# We'll float it to the right by placing it in the same top row with negative margin, or just do st.columns
 col1, col2 = st.columns([0.85, 0.15])
 with col1:
-    st.write("")  # filler
+    st.write("")
 with col2:
     if st.button("Skip"):
         st.warning("Skipping tutorial... (placeholder)")
 
-# 3) Main content: Title + Subtitle
-st.markdown("""
-<div style="max-width: 600px; margin: 2rem auto; text-align: center;">
-  <h2 style="
-    font-size: 1.875rem; /* text-3xl */
-    font-weight: 700;    /* font-bold */
-    color: #111827;      /* near-black text */
-    margin-bottom: 0.5rem;">
-    How to Take Measurements
-  </h2>
-  <p style="
-    font-size: 1rem;     /* text-base */
-    color: #4B5563;      /* text-base-600 */
-    margin-bottom: 2rem;">
-    Follow these steps for accurate readings
-  </p>
-</div>
-""", unsafe_allow_html=True)
+##############################
+# 2) Main heading & subtitle
+##############################
+st.markdown(
+    """
+    <div class="header-text">
+      <h1>How to Take Measurements</h1>
+      <p>Follow these steps for accurate readings</p>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 
-# 4) Carousel HTML + JavaScript
-#    We place it inside a container. The slides each have an image + heading + text.
-#    The JS might be partially restricted in Streamlit, but we'll include it for completeness.
+##############################
+# 3) Carousel
+##############################
 carousel_html = """
-<div id="default-carousel" style="max-width:600px; margin: 0 auto; background-color: #FFFFFF; border-radius: 0.5rem; padding: 1rem; position: relative;">
+<div id="default-carousel" class="carousel-wrapper">
   <div style="position: relative; height: 300px; overflow: hidden;">
     <!-- Slide 1 -->
     <div class="hidden duration-700 ease-in-out absolute inset-0 transition-all transform" data-carousel-item="active">
@@ -193,20 +242,23 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 """
+
 st.markdown(carousel_html, unsafe_allow_html=True)
 
-# 5) Fixed footer bar with "Got It, Let's Start" button
-st.markdown(
-    """
-    <div class="footer-bar">
-    </div>
-    """,
-    unsafe_allow_html=True
-)
+##############################
+# 4) Fixed bottom bar: "Got It, Let's Start"
+##############################
+# We place an empty <div> for the bar, then the real Streamlit button that we style.
+# Alternatively, we can do a plain HTML button. But let's do a real Streamlit button.
+footer_bar_html = """
+<div class="footer-bar">
+</div>
+"""
+st.markdown(footer_bar_html, unsafe_allow_html=True)
 
-# Use absolute positioning trick to place the button in that bar
-# We'll put the st.button call here, so it physically appears after the bar,
-# but visually the button will appear on top of it (since it's 'fixed').
-if st.button("Got It, Let's Start"):
-    st.success("Tutorial complete! (Placeholder)")
-
+# Place the actual Streamlit button
+center_col = st.columns([1,2,1])[1]  # center column
+with center_col:
+    got_it = st.button("Got It, Let's Start")
+    if got_it:
+        st.success("Tutorial complete! (placeholder)")
