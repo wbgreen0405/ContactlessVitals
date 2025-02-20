@@ -2,25 +2,42 @@ import streamlit as st
 
 st.set_page_config(layout="wide", page_title="Camera Access Required")
 
-# Inject CSS for background and reduced padding
+# 1) Inject CSS to style the page background, remove extra padding, and style Streamlit buttons
 st.markdown("""
 <style>
-/* Light gray page background */
+/* Light gray page background (like Tailwind bg-gray-50) */
 body {
     background-color: #F9FAFB;
     margin: 0;
     padding: 0;
     font-family: sans-serif;
 }
-/* Remove some default Streamlit padding */
+/* Remove default Streamlit padding */
 main .block-container {
     padding-top: 2rem !important;
     padding-bottom: 2rem !important;
 }
+/* Center and style the Streamlit buttons in this app */
+.stButton > button {
+    display: block;                /* so margin: auto can center it */
+    margin: 1rem auto;            /* auto left/right => centered */
+    background-color: #3B82F6 !important;  /* Tailwind primary-500 */
+    color: #ffffff !important;    
+    border-radius: 0.5rem !important;      /* rounded-lg */
+    border: none !important;
+    padding: 0.75rem 1.5rem !important;    /* ~py-3 px-5 */
+    font-weight: 500 !important;           /* font-medium */
+    font-size: 1rem !important;            /* text-base */
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+.stButton > button:hover {
+    background-color: #2563EB !important;  /* Tailwind primary-600 */
+}
 </style>
 """, unsafe_allow_html=True)
 
-# 1. Page Title & Subtitle (centered)
+# 2) Page title and subtitle (centered)
 st.markdown("""
 <div style="text-align: center; margin-bottom: 2rem;">
   <h1 style="
@@ -39,8 +56,9 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-# 2. Card: "Enable Camera Access"
-#    We'll open a <div> with card styling, place text, then do st.button, then close the </div>.
+# --------------------
+# CARD 1: Enable Camera Access
+# --------------------
 st.markdown("""
 <div style="
   background-color: #FFFFFF; 
@@ -49,23 +67,25 @@ st.markdown("""
   border-radius: 0.5rem; 
   padding: 2rem; 
   max-width: 600px; 
-  margin: 0 auto 2rem auto; /* center horizontally + bottom margin */
+  margin: 0 auto 2rem auto; /* center + bottom margin */
   text-align: center;">
   
-  <!-- Icon -->
-  <svg style="width:64px; height:64px; color:#3b82f6; margin-bottom:1rem;"
-       xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-    <path fill-rule="evenodd" 
-          d="M4 5a2 2 0 00-2 2v8a2 2 0 
-             002 2h12a2 2 0 002-2V7a2 2 0 
-             00-2-2h-1.586a1 1 0 
-             01-.707-.293l-1.121-1.121A2 
-             2 0 0011.172 3H8.828a2 2 0 
-             00-1.414.586L6.293 4.707A1 
-             1 0 015.586 5H4zm6 9a3 3 0 
-             100-6 3 3 0 000 6z" 
-          clip-rule="evenodd"/>
-  </svg>
+  <!-- Camera icon, centered -->
+  <div style="text-align: center; margin-bottom: 1rem;">
+    <svg style="width:64px; height:64px; color:#3b82f6;"
+         xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+      <path fill-rule="evenodd" 
+            d="M4 5a2 2 0 00-2 2v8a2 2 0 
+               002 2h12a2 2 0 002-2V7a2 2 0 
+               00-2-2h-1.586a1 1 0 
+               01-.707-.293l-1.121-1.121A2 
+               2 0 0011.172 3H8.828a2 2 0 
+               00-1.414.586L6.293 4.707A1 
+               1 0 015.586 5H4zm6 9a3 3 0 
+               100-6 3 3 0 000 6z" 
+            clip-rule="evenodd"/>
+    </svg>
+  </div>
 
   <h2 style="
     font-size: 1.25rem; /* text-xl */
@@ -81,16 +101,16 @@ st.markdown("""
     line-height: 1.5;">
     Your camera will only be used during vital measurements. No videos or images are stored.
   </p>
+</div>
 """, unsafe_allow_html=True)
 
-# Actual Streamlit button
+# Actual Streamlit button, centered & styled via CSS above
 if st.button("Allow Camera Access"):
     st.success("Camera access granted! (Placeholder)")
 
-# Close the card's div
-st.markdown("</div>", unsafe_allow_html=True)
-
-# 3. Card: "Privacy Guarantee"
+# --------------------
+# CARD 2: Privacy Guarantee
+# --------------------
 st.markdown("""
 <div style="
   background-color: #FFFFFF; 
@@ -122,11 +142,9 @@ st.markdown("""
     <li>Your data is encrypted and never shared without consent</li>
     <li>You can delete your data at any time</li>
   </ul>
+</div>
 """, unsafe_allow_html=True)
 
-# Actual Streamlit button for "Read Privacy Policy"
+# "Read Privacy Policy" button, also centered & styled
 if st.button("Read Privacy Policy"):
     st.info("Privacy policy details here (placeholder).")
-
-# Close the card's div
-st.markdown("</div>", unsafe_allow_html=True)
