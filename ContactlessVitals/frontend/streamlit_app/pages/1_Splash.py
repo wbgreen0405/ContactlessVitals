@@ -3,21 +3,9 @@ import streamlit as st
 # Must be the first Streamlit command
 st.set_page_config(page_title="ContactlessVitals", layout="wide")
 
-# Hide the default sidebar
-st.markdown(
-    """
-    <style>
-      [data-testid="stSidebar"] { display: none; }
-      ::-webkit-scrollbar { display: none; }
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
-
-# Tailwind + DaisyUI header snippet (we can use Tailwind only if DaisyUI classes aren’t needed)
-header_html = """
+# Add Tailwind CSS and FontAwesome (and hide Streamlit’s sidebar)
+tailwind_header = """
 <head>
-  <!-- Tailwind CSS via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
       window.FontAwesomeConfig = { autoReplaceSvg: 'nest' };
@@ -27,33 +15,18 @@ header_html = """
   <style>
     * { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
     ::-webkit-scrollbar { display: none; }
-    /* Control overall container width */
-    #welcome-screen {
-      max-width: 800px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    /* Adjust image size and text scale */
-    #welcome-screen img {
-      max-width: 100%;
-      height: auto;
-    }
-    h1 {
-      font-size: 2.5rem; /* adjust as needed */
-    }
-    p {
-      font-size: 1.125rem;
-    }
-    button {
-      font-size: 1rem;
-    }
+    [data-testid="stSidebar"] { display: none; }
+    /* Ensure anchors have no underline */
+    a { text-decoration: none; }
+    a:hover { text-decoration: none; }
+    /* Optional: Limit container width */
+    #welcome-screen { max-width: 800px; margin: 0 auto; }
   </style>
 </head>
 """
 
-# Welcome Screen HTML with container adjustments
 welcome_html = f"""
-{header_html}
+{tailwind_header}
 <body class="h-full text-base-content">
   <div id="welcome-screen" class="min-h-screen bg-gradient-to-b from-blue-50 to-white p-6 flex flex-col justify-between">
     <!-- Top section with title, subtitle, and image -->
@@ -67,13 +40,13 @@ welcome_html = f"""
       <div class="w-full max-w-md mx-auto">
         <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/default-placeholder.png"
              alt="Contactless monitoring animation"
-             class="object-cover rounded-xl shadow-lg" />
+             class="w-full h-64 object-cover rounded-xl shadow-lg" />
       </div>
     </div>
 
     <!-- Bottom section: Card with icons + Buttons -->
     <div class="space-y-6 text-center mt-12">
-      <div ds-name="Card" class="rounded-lg text-base-content flex flex-col bg-white border border-gray-200 p-4 shadow max-w-md mx-auto">
+      <div ds-name="Card" class="rounded-lg text-base-content flex flex-col bg-white border border-gray-200 p-4 shadow max-w-md mx-auto bg-white/80 backdrop-blur">
         <div class="flex justify-center items-center space-x-6">
           <!-- Heart Rate Icon -->
           <div class="flex flex-col items-center">
@@ -108,24 +81,28 @@ welcome_html = f"""
 
       <!-- Buttons -->
       <div class="space-y-4 max-w-md mx-auto">
-        <!-- "Get Started" button -->
-        <button ds-variant="primary" ds-size="xl" ds-name="Button"
-                class="flex justify-center items-center font-medium transition-colors duration-200 ease-in-out
-                       focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-opacity-50
-                       rounded-lg bg-blue-500 text-white hover:bg-blue-600 px-6 py-3 text-base w-full">
-          Get Started
-        </button>
-        <!-- "Already have an account?" link -->
-        <button ds-variant="link" ds-name="Button"
-                class="flex justify-center items-center font-medium transition-colors duration-200 ease-in-out
-                       focus:outline-none px-5 py-2 text-sm rounded-lg bg-transparent text-blue-500 hover:underline">
-          Already have an account? Sign in
-        </button>
+        <!-- "Get Started" button wrapped in an anchor -->
+        <a href="?page=Onboarding" target="_self" style="text-decoration: none;">
+          <button ds-variant="primary" ds-size="xl" ds-name="Button"
+                  class="flex justify-center items-center font-medium transition-colors duration-200 ease-in-out
+                         focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-opacity-50
+                         rounded-lg bg-blue-500 text-white hover:bg-blue-600 px-6 py-3 text-base w-full">
+            Get Started
+          </button>
+        </a>
+        <!-- "Already have an account?" link wrapped similarly -->
+        <a href="?page=SignIn" target="_self" style="text-decoration: none;">
+          <button ds-variant="link" ds-name="Button"
+                  class="flex justify-center items-center font-medium transition-colors duration-200 ease-in-out
+                         focus:outline-none px-5 py-2 text-sm rounded-lg bg-transparent text-blue-500 hover:underline">
+            Already have an account? Sign in
+          </button>
+        </a>
       </div>
     </div>
   </div>
 </body>
 """
 
-# Render the welcome screen HTML in Streamlit
+# Render the welcome screen in Streamlit
 st.markdown(welcome_html, unsafe_allow_html=True)
