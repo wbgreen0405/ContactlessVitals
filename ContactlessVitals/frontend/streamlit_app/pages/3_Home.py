@@ -5,8 +5,8 @@ st.set_page_config(page_title="How to Take Measurements", layout="wide")
 # 1) Global CSS
 st.markdown("""
 <style>
-/* Force a light background, removing any user-level dark theme overrides if possible */
-body, [data-testid="stAppViewContainer"], [data-testid="stApp"] {
+/* Force a light background */
+body, [data-testid="stAppViewContainer"], [data-testid="stApp"], .block-container {
     background-color: #F9FAFB !important;
     margin: 0; 
     padding: 0;
@@ -16,15 +16,6 @@ body, [data-testid="stAppViewContainer"], [data-testid="stApp"] {
 main .block-container {
     padding-top: 1rem !important;
     padding-bottom: 6rem !important; 
-}
-
-/* Top bar container: arrow on left, skip on right */
-.top-bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 1.5rem; 
-    margin-bottom: 1rem;
 }
 
 /* Pinned bright-blue footer at bottom */
@@ -39,12 +30,11 @@ main .block-container {
     z-index: 9999;
     margin: 0;
 }
-/* Center the pinned footer button, make it wide */
 .footer-fixed .stButton button {
     display: block;
     margin: 0 auto;
     width: 100% !important;
-    max-width: 300px; /* limit how wide it can grow */
+    max-width: 300px;
     background-color: #3B82F6 !important;
     color: #FFFFFF !important;
     font-size: 1rem !important;
@@ -60,9 +50,9 @@ main .block-container {
 
 /* Main content wrapper, fully centered */
 .centered-container {
-    max-width: 600px;         /* limit total width */
-    margin: 0 auto;           /* center horizontally */
-    text-align: center;       /* center all text/icons */
+    max-width: 600px;
+    margin: 0 auto;         /* center horizontally */
+    text-align: center;     /* center text & icons inside */
 }
 
 /* A white card for the steps */
@@ -73,40 +63,26 @@ main .block-container {
     border-radius: 0.5rem;
     padding: 2rem;
     margin-top: 1rem;
-    text-align: center; /* ensure icons & text are centered inside */
+    text-align: center; 
 }
 </style>
 """, unsafe_allow_html=True)
 
 #####################################
-# 2) Top Bar (Arrow on left, Skip on right)
+# 2) Top Bar with real Streamlit buttons
 #####################################
-st.markdown("""
-<div class="top-bar">
+col1, col2, col3 = st.columns([0.1, 0.8, 0.1])
 
-  <!-- Left arrow (HTML). If you need a Python callback, replace with st.button. -->
-  <button type="button" style="background:none; border:none; cursor:pointer;"
-          onclick="alert('Back arrow clicked (placeholder)')">
-    <svg style="width:24px; height:24px; color:#111827;" 
-         xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-      <path fill-rule="evenodd" 
-            d="M9.707 16.707a1 1 0 01-1.414 
-               0l-6-6a1 1 0 010-1.414l6-6a1 
-               1 0 011.414 1.414L5.414 
-               9H17a1 1 0 110 2H5.414l4.293 
-               4.293a1 1 0 010 1.414z" 
-            clip-rule="evenodd"/>
-    </svg>
-  </button>
+with col1:
+    if st.button("←"):
+        st.info("Back arrow clicked (placeholder)")
 
-  <!-- Skip as pure HTML (no st.columns) -->
-  <button type="button" style="background:none; border:none; cursor:pointer; font-size:1rem; color:#111827;"
-          onclick="alert('Skipping tutorial... (placeholder)')">
-    Skip
-  </button>
+with col2:
+    st.write("")  # empty middle
 
-</div>
-""", unsafe_allow_html=True)
+with col3:
+    if st.button("Skip"):
+        st.warning("Skipping tutorial... (placeholder)")
 
 #####################################
 # 3) Centered Container for Heading + Steps
@@ -181,7 +157,9 @@ steps = [
 ]
 
 for step in steps:
+    # Icon
     st.markdown(step["icon"], unsafe_allow_html=True)
+    # Title + Description
     st.markdown(f"""
     <h4 style="font-size:1.25rem; font-weight:700; color:#374151; margin-top:0.75rem;">
       {step['title']}
@@ -192,7 +170,6 @@ for step in steps:
     """, unsafe_allow_html=True)
 
 st.markdown("</div>", unsafe_allow_html=True)  # close the .card
-
 st.markdown("</div>", unsafe_allow_html=True)  # close the .centered-container
 
 #####################################
