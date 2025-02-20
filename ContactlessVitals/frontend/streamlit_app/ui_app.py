@@ -21,23 +21,19 @@ TAILWIND_HEADER = """
 """
 
 # --------------------------
-# 1) Splash Screen: auto-redirect after 3 seconds to Onboarding
+# 1) Splash Screen: click anywhere to navigate to Onboarding
 # --------------------------
 SPLASH_SCREEN_HTML = f"""
 <html>
-  <head>
-    {TAILWIND_HEADER}
-    <!-- Redirect after 3 seconds -->
-    <meta http-equiv="refresh" content="3; URL=?screen=Onboarding">
-  </head>
-  <body class="min-h-screen bg-gradient-to-br from-blue-200 to-teal-200 flex items-center justify-center">
+  {TAILWIND_HEADER}
+  <body onclick="window.location.href='?screen=Onboarding'" class="min-h-screen bg-gradient-to-br from-blue-200 to-teal-200 flex items-center justify-center" style="cursor: pointer;">
     <div class="text-center">
       <div class="w-32 h-32 bg-white rounded-full flex items-center justify-center shadow-lg mx-auto">
           <i class="fa-solid fa-heart-pulse text-blue-500 text-5xl"></i>
       </div>
       <h1 class="text-4xl font-bold text-blue-900 mt-6">VitalScan</h1>
       <p class="text-lg text-teal-800 mt-2">Contactless Health Monitoring</p>
-      <p class="mt-4 text-sm text-gray-600">Please wait...</p>
+      <p class="mt-4 text-sm text-gray-600">Tap anywhere to continue</p>
     </div>
   </body>
 </html>
@@ -99,7 +95,7 @@ ONBOARDING_HTML = f"""
     </main>
     <footer class="p-6">
       <!-- "Get Started" navigates to Measurement -->
-      <button onclick="window.location.search='?screen=Measurement'"
+      <button onclick="window.location.href='?screen=Measurement'"
               class="w-full bg-gray-900 text-white py-4 rounded-xl font-semibold">
         Get Started
       </button>
@@ -279,9 +275,9 @@ SCREENS = {
 
 def main():
     st.set_page_config(page_title="Contactless Mobile Vital Signs", layout="wide")
-    st.write("## Debug: Splash example with forced redirect using meta refresh")
+    st.write("## Debug: Navigation Demo")
 
-    # Use st.query_params to read the query parameters.
+    # Use st.query_params (a property) to read the query parameters.
     qparams = st.query_params
     screen_param = qparams.get("screen", ["Splash"])[0]
 
