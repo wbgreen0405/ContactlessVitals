@@ -2,204 +2,106 @@ import streamlit as st
 
 st.set_page_config(layout="wide")
 
-# Inject custom CSS to replicate your Tailwind-like classes and remove extra padding
-st.markdown(
-    """
-    <style>
-    /* Remove default Streamlit spacing */
-    html, body, [data-testid="stAppViewContainer"], [data-testid="stApp"], .block-container {
-        margin: 0 !important;
-        padding: 0 !important;
-        background: #F9FAFB; /* Matches bg-gray-50 */
-    }
+# Inject the custom CSS first
+st.markdown("""
+<style>
+/* Remove default Streamlit spacing/padding */
+html, body, [data-testid="stAppViewContainer"], [data-testid="stApp"], .block-container {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #F9FAFB; /* Matches bg-gray-50 */
+}
 
-    /* Container that holds everything */
+/* Tailwind-like classes you used */
+.permissions-setup {
+    min-height: 100vh; 
+    padding: 1rem; /* p-4 */
+}
+@media (min-width: 768px) {
     .permissions-setup {
-        min-height: 100vh; 
-        padding: 1rem; /* p-4 */
+        padding: 1.5rem; /* md:p-6 */
     }
-    @media (min-width: 768px) {
-        .permissions-setup {
-            padding: 1.5rem; /* md:p-6 */
-        }
-    }
+}
+.max-w-lg {
+    max-width: 32rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+.space-y-8 > * + * {
+    margin-top: 2rem;
+}
+.space-y-4 > * + * {
+    margin-top: 1rem;
+}
+.text-center { text-align: center; }
+.text-3xl { font-size: 1.875rem; line-height: 2.25rem; }
+.text-base { font-size: 1rem; }
+.font-bold { font-weight: 700; }
+.leading-tight { line-height: 1.25; }
+.tracking-tight { letter-spacing: -0.015em; }
+.text-base-800 { color: #1f2937; }
+.text-base-700 { color: #374151; }
+.text-base-600 { color: #4b5563; }
+.rounded-lg { border-radius: 0.5rem; }
+.text-base-content { color: #1f2937; }
+.bg-base { background-color: #ffffff; }
+.border-base-200 { border-color: #e5e7eb; }
+.p-0 { padding: 0 !important; }
+.shadow { box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); }
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.justify-start { justify-content: flex-start; }
+.justify-center { justify-content: center; }
+.items-center { align-items: center; }
+.gap-4 { gap: 1rem; }
+.mb-6 { margin-bottom: 1.5rem; }
+.h-full { height: 100%; }
+.h-16 { height: 4rem; }
+.w-16 { width: 4rem; }
+.text-primary-500 { color: #3b82f6; }
+.text-primary-content { color: #ffffff; }
+.bg-primary-500 { background-color: #3b82f6; }
+.hover\\:bg-primary-600:hover { background-color: #2563eb; }
+.focus\\:ring-primary-300:focus {
+    box-shadow: 0 0 0 2px rgba(147,197,253,0.5);
+}
+.px-5 { padding-left: 1.25rem; padding-right: 1.25rem; }
+.py-3 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
+.transition-colors {
+    transition: color 0.2s, background-color 0.2s;
+}
+.duration-200 { transition-duration: 200ms; }
+.ease-in-out {
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+.focus\\:outline-none:focus { outline: none; }
+.focus\\:ring-2:focus {
+    box-shadow: 0 0 0 2px rgba(0,0,0,0.1);
+}
+.focus\\:ring-offset-2:focus { outline-offset: 2px; }
+.text-xl { font-size: 1.25rem; }
+.mb-6 { margin-bottom: 1.5rem; }
+.bg-transparent { background: transparent; }
+.text-primary { color: #3b82f6; }
+.hover\\:underline:hover { text-decoration: underline; }
+.hover\\:text-primary-focus:hover { color: #2563eb; }
+.px-3 { padding-left: 0.75rem; padding-right: 0.75rem; }
+.py-2 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+.text-sm { font-size: 0.875rem; }
+.list-disc { list-style-type: disc; }
+.list-inside { list-style-position: inside; }
+.space-y-1 > * + * {
+    margin-top: 0.25rem;
+}
+.pt-4 { padding-top: 1rem; }
+</style>
+""", unsafe_allow_html=True)
 
-    .max-w-lg {
-        max-width: 32rem; /* ~512px */
-        margin-left: auto;
-        margin-right: auto;
-    }
-    .space-y-8 > * + * {
-        margin-top: 2rem;
-    }
-    .space-y-4 > * + * {
-        margin-top: 1rem;
-    }
-    .text-center {
-        text-align: center;
-    }
-    .text-3xl {
-        font-size: 1.875rem;
-        line-height: 2.25rem;
-    }
-    .text-base {
-        font-size: 1rem;
-    }
-    .font-bold {
-        font-weight: 700;
-    }
-    .leading-tight {
-        line-height: 1.25;
-    }
-    .tracking-tight {
-        letter-spacing: -0.015em;
-    }
-    .text-base-800 {
-        color: #1f2937;
-    }
-    .text-base-700 {
-        color: #374151;
-    }
-    .text-base-600 {
-        color: #4b5563;
-    }
-    .rounded-lg {
-        border-radius: 0.5rem;
-    }
-    .text-base-content {
-        color: #1f2937;
-    }
-    .bg-base {
-        background-color: #ffffff;
-    }
-    .border-base-200 {
-        border-color: #e5e7eb;
-    }
-    .p-0 {
-        padding: 0 !important;
-    }
-    .shadow {
-        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-    }
-    .flex {
-        display: flex;
-    }
-    .flex-col {
-        flex-direction: column;
-    }
-    .justify-start {
-        justify-content: flex-start;
-    }
-    .justify-center {
-        justify-content: center;
-    }
-    .items-center {
-        align-items: center;
-    }
-    .gap-4 {
-        gap: 1rem;
-    }
-    .mb-6 {
-        margin-bottom: 1.5rem;
-    }
-    .h-full {
-        height: 100%;
-    }
-    .h-16 {
-        height: 4rem;
-    }
-    .w-16 {
-        width: 4rem;
-    }
-    .text-primary-500 {
-        color: #3b82f6; 
-    }
-    .text-primary-content {
-        color: #ffffff;
-    }
-    .bg-primary-500 {
-        background-color: #3b82f6;
-    }
-    .hover\\:bg-primary-600:hover {
-        background-color: #2563eb;
-    }
-    .focus\\:ring-primary-300:focus {
-        box-shadow: 0 0 0 2px rgba(147,197,253,0.5);
-    }
-    .px-5 {
-        padding-left: 1.25rem;
-        padding-right: 1.25rem;
-    }
-    .py-3 {
-        padding-top: 0.75rem;
-        padding-bottom: 0.75rem;
-    }
-    .transition-colors {
-        transition: color 0.2s, background-color 0.2s;
-    }
-    .duration-200 {
-        transition-duration: 200ms;
-    }
-    .ease-in-out {
-        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .focus\\:outline-none:focus {
-        outline: none;
-    }
-    .focus\\:ring-2:focus {
-        box-shadow: 0 0 0 2px rgba(0,0,0,0.1);
-    }
-    .focus\\:ring-offset-2:focus {
-        outline-offset: 2px;
-    }
-    .text-xl {
-        font-size: 1.25rem;
-    }
-    .bg-transparent {
-        background: transparent;
-    }
-    .text-primary {
-        color: #3b82f6;
-    }
-    .hover\\:underline:hover {
-        text-decoration: underline;
-    }
-    .hover\\:text-primary-focus:hover {
-        color: #2563eb;
-    }
-    .px-3 {
-        padding-left: 0.75rem;
-        padding-right: 0.75rem;
-    }
-    .py-2 {
-        padding-top: 0.5rem;
-        padding-bottom: 0.5rem;
-    }
-    .text-sm {
-        font-size: 0.875rem;
-    }
-    .list-disc {
-        list-style-type: disc;
-    }
-    .list-inside {
-        list-style-position: inside;
-    }
-    .space-y-1 > * + * {
-        margin-top: 0.25rem;
-    }
-    .pt-4 {
-        padding-top: 1rem;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
-
-# Create the HTML structure inside Streamlit
+# Now the actual HTML content we want to render:
 html_content = """
 <div id="permissions-setup" class="permissions-setup">
   <div class="max-w-lg space-y-8">
-  
+
     <!-- Header -->
     <div id="header" class="text-center space-y-4">
       <h2 ds-name="H2" class="text-3xl font-bold leading-tight tracking-tight text-base-800">Camera Access Required</h2>
@@ -271,9 +173,5 @@ html_content = """
 </div>
 """
 
+# Render the HTML
 st.markdown(html_content, unsafe_allow_html=True)
-
-# Additional Streamlit logic can go here (e.g. handling button clicks)
-
-
-# You can add additional Streamlit logic below (e.g. button clicks, camera checks, etc.)
