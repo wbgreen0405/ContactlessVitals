@@ -3,11 +3,13 @@ import streamlit as st
 st.set_page_config(page_title="Quick Start", layout="wide")
 
 ###########################
-# 1) Top Bar: "Quick Start" left, [X] on right
+# 1) Top Bar: "Quick Start" (centered in its column), [X] on right
 ###########################
 colA, colB = st.columns([9,1])
 with colA:
-    st.markdown("<h2 style='margin:0;'>Quick Start</h2>", unsafe_allow_html=True)
+    # Center "Quick Start" within colA via inline HTML
+    st.markdown("<h2 style='margin:0; text-align:center; width:100%;'>Quick Start</h2>", unsafe_allow_html=True)
+
 with colB:
     # "X" button on the right
     if st.button("✕", key="close_quickstart"):
@@ -16,14 +18,20 @@ with colB:
 st.write("---")  # horizontal rule
 
 ###########################
-# 2) "Before You Begin" Section
+# 2) "Before You Begin" Section (centered)
 ###########################
-st.markdown("### Before You Begin")
-st.markdown("""
-- Ensure good lighting on your face  
-- Keep your face relatively still  
-- Measurement takes about 30 seconds
-""")
+c1, c2, c3 = st.columns([1,2,1])
+with c2:
+    # Center the heading
+    st.markdown("<h3 style='text-align:center;'>Before You Begin</h3>", unsafe_allow_html=True)
+    # Center the bullet points via inline HTML
+    st.markdown("""
+    <ul style="list-style-type: disc; text-align:center; margin:0 auto; padding:0;">
+      <li>Ensure good lighting on your face</li>
+      <li>Keep your face relatively still</li>
+      <li>Measurement takes about 30 seconds</li>
+    </ul>
+    """, unsafe_allow_html=True)
 
 ###########################
 # 3) Large Circle in Center
