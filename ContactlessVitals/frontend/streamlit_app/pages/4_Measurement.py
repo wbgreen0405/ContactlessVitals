@@ -130,4 +130,12 @@ st.markdown("""
         <span>Home</span>
     </a>
     <a href="#">
-      
+        <img src="https://img.icons8.com/ios-filled/24/000000/area-chart.png" class="nav-icon"/>
+        <span>History</span>
+    </a>
+    <a href="#">
+        <img src="https://img.icons8.com/ios-filled/24/000000/settings.png" class="nav-icon"/>
+        <span>Settings</span>
+    </a>
+</div>
+""", unsafe_allow_html=True)
