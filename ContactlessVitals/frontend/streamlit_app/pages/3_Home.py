@@ -172,4 +172,21 @@ steps = [
 # Create the card
 st.markdown('<div class="card">', unsafe_allow_html=True)
 for step in steps:
-    st.markdown(step["ico
+    st.markdown(step["icon"], unsafe_allow_html=True)
+    st.markdown(f"""
+    <h4 style="font-size:1.25rem; font-weight:700; color:#374151; margin-top:0.75rem;">
+      {step['title']}
+    </h4>
+    <p style="font-size:1rem; color:#4B5563; margin-top:0.25rem; margin-bottom:1.75rem;">
+      {step['description']}
+    </p>
+    """, unsafe_allow_html=True)
+st.markdown('</div>', unsafe_allow_html=True)
+
+#####################################
+# Pinned Footer
+#####################################
+st.markdown('<div class="footer-fixed">', unsafe_allow_html=True)
+if st.button("Got It, Let's Start"):
+    st.success("Tutorial complete! (placeholder)")
+st.markdown('</div>', unsafe_allow_html=True)
