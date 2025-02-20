@@ -67,8 +67,7 @@ footer_html = """
 .footer-fixed {
     position: fixed;
     bottom: 0; left: 0; right: 0;
-    background-color: #3B82F6; /* Blue background for the bar */
-    padding: 1rem;
+    padding: 1rem; /* Keep the padding */
     text-align: center;
     z-index: 9999;
     margin: 0;
@@ -76,9 +75,8 @@ footer_html = """
 /* Force the button inside the pinned footer to be blue */
 .footer-fixed button {
     display: block;
-    margin: 0 auto;
-    width: 100% !important;
-    max-width: 300px;
+    margin: 0 auto;  /* Center the button */
+    width: auto !important; /* Adjust width as needed */
     background-color: #3B82F6 !important; /* Force button background */
     color: #FFFFFF !important;
     font-size: 1rem !important;
@@ -93,8 +91,7 @@ footer_html = """
 }
 </style>
 <div class="footer-fixed">
-    <div style="display: flex; justify-content: center;">  <button id="my-button" type="button" class="stButton">Got It, Let's Start</button>
-    </div>
+    <button id="my-button" type="button" class="stButton">Got It, Let's Start</button>
 </div>
 """
 st.markdown(footer_html, unsafe_allow_html=True)
