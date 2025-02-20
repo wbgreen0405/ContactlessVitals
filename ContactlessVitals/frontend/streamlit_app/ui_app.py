@@ -1,4 +1,3 @@
-import time
 import streamlit as st
 import streamlit.components.v1 as components
 
@@ -7,7 +6,7 @@ import streamlit.components.v1 as components
 # --------------------------
 TAILWIND_HEADER = """
 <head>
-  <meta http-equiv="refresh" content="3; URL='?screen=Onboarding'" />
+  <meta charset="UTF-8">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
       window.FontAwesomeConfig = { autoReplaceSvg: 'nest' };
@@ -29,6 +28,8 @@ SPLASH_SCREEN_HTML = f"""
 <html>
   {TAILWIND_HEADER}
   <body class="min-h-screen bg-gradient-to-br from-blue-200 to-teal-200 flex items-center justify-center">
+    <!-- Meta refresh redirect -->
+    <meta http-equiv="refresh" content="3; URL='?screen=Onboarding'" />
     <div class="text-center">
       <div class="w-32 h-32 bg-white rounded-full flex items-center justify-center shadow-lg mx-auto">
           <i class="fa-solid fa-heart-pulse text-blue-500 text-5xl"></i>
@@ -279,14 +280,14 @@ def main():
     st.set_page_config(page_title="Contactless Mobile Vital Signs", layout="wide")
     st.write("## Debug: Navigation Demo")
 
-    # Use st.query_params to read the query parameters.
+    # Read the query parameter for "screen" (default to Splash)
     qparams = st.query_params
     screen_param = qparams.get("screen", ["Splash"])[0]
 
     if screen_param not in SCREENS:
         screen_param = "Splash"
 
-    # Render the appropriate screen's HTML.
+    # Render the corresponding HTML for the screen
     components.html(SCREENS[screen_param], height=900, scrolling=True)
 
 if __name__ == "__main__":
