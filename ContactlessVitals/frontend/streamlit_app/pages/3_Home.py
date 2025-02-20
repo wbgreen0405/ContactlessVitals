@@ -2,53 +2,44 @@ import streamlit as st
 
 st.set_page_config(page_title="How to Measure Your Vitals", layout="wide")
 
-# 1) Inline CSS for centering + pinned footer
+# 1) Inline CSS to center everything
 st.markdown("""
 <style>
-/* Light background for the entire page */
+/* Force a light background */
 body, [data-testid="stAppViewContainer"], [data-testid="stApp"], .block-container {
-    background-color: #F9FAFB !important; /* or transparent if you prefer */
-    margin: 0; 
+    background-color: #F9FAFB !important;
+    margin: 0;
     padding: 0;
     font-family: sans-serif;
 }
 
-/* Remove default Streamlit padding, leave space for pinned footer */
+/* Remove default top/bottom padding, leave space for pinned footer */
 main .block-container {
     padding-top: 2rem !important;
-    padding-bottom: 6rem !important; /* space above pinned footer */
+    padding-bottom: 6rem !important;
 }
 
-/* A container that centers content horizontally */
-.center-container {
-    max-width: 700px;
-    margin: 0 auto; 
-    text-align: center; 
-}
-
-/* Steps wrapper: stack them vertically, center each step */
-.steps-wrapper {
+/* A single container that centers everything horizontally */
+.center-page {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
-    align-items: center; /* center each step horizontally */
-    margin-top: 2rem;
+    align-items: center;    /* center all content horizontally */
+    justify-content: flex-start;  /* from the top down */
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;     /* center text inline */
+    max-width: 700px;       /* limit how wide the content can get */
 }
 
-/* Each step card: minimal border, stacked content, centered text */
+/* Each step “card”: minimal border, everything stacked */
 .step-card {
-    border: 1px solid #E5E7EB;
-    border-radius: 0.5rem;
-    padding: 2rem;
     width: 100%;
     max-width: 600px;
-    display: flex;
-    flex-direction: column;
-    align-items: center; 
-    text-align: center; 
-    background-color: #FFFFFF; /* or transparent if you don't want a white box */
-    box-shadow: none;
-    position: relative;
+    border: 1px solid #E5E7EB;
+    border-radius: 0.5rem;
+    background-color: #FFFFFF;
+    margin-bottom: 1.5rem;
+    padding: 2rem;
 }
 
 /* Step number badge */
@@ -63,7 +54,7 @@ main .block-container {
     justify-content: center;
     font-size: 0.875rem;
     font-weight: 600;
-    margin-bottom: 1rem;
+    margin: 0 auto 1rem auto; /* center horizontally, space below */
 }
 
 /* Step image */
@@ -73,12 +64,12 @@ main .block-container {
     object-fit: cover;
     border-radius: 0.25rem;
     background-color: #F9FAFB;
-    margin-bottom: 1rem;
+    margin: 0 auto 1rem auto; /* center horizontally, space below */
 }
 
-/* Step title & description */
+/* Step title & desc */
 .step-title {
-    font-size: 1.125rem; /* ~ text-lg */
+    font-size: 1.125rem;
     font-weight: 700;
     color: #111827;
     margin-bottom: 0.5rem;
@@ -89,7 +80,7 @@ main .block-container {
     line-height: 1.4;
 }
 
-/* Pinned footer at the bottom (blue bar) */
+/* Pinned footer */
 .footer-fixed {
     position: fixed;
     bottom: 0;
@@ -122,15 +113,21 @@ main .block-container {
 </style>
 """, unsafe_allow_html=True)
 
-# 2) Main Heading
+##########################
+# 2) Title & Steps
+##########################
+# We'll wrap everything in one .center-page div so it’s all horizontally centered
+st.markdown('<div class="center-page">', unsafe_allow_html=True)
+
+# Heading
 st.markdown("""
-<div class="center-container">
-  <h1 style="margin-bottom:0.5rem;">How to Measure Your Vitals</h1>
-  <p style="color:#4B5563; margin-bottom:2rem;">Follow these simple steps for accurate measurements</p>
-</div>
+<h1 style="margin-bottom:0.5rem;">How to Measure Your Vitals</h1>
+<p style="color:#4B5563; margin-bottom:2rem;">
+  Follow these simple steps for accurate measurements
+</p>
 """, unsafe_allow_html=True)
 
-# 3) Steps
+# Steps data
 steps = [
     {
         "step_num": "1",
@@ -152,8 +149,7 @@ steps = [
     },
 ]
 
-st.markdown('<div class="center-container"><div class="steps-wrapper">', unsafe_allow_html=True)
-
+# Render each step
 for step in steps:
     st.markdown(f"""
     <div class="step-card">
@@ -164,14 +160,15 @@ for step in steps:
     </div>
     """, unsafe_allow_html=True)
 
-st.markdown('</div></div>', unsafe_allow_html=True)  # close steps-wrapper & center-container
+st.markdown("</div>", unsafe_allow_html=True)  # close center-page
 
-# 4) Pinned Footer with a wide, centered button
+##########################
+# 3) Pinned Footer
+##########################
 st.markdown('<div class="footer-fixed">', unsafe_allow_html=True)
 button_clicked = st.button("Got It, Let's Start")
 st.markdown("</div>", unsafe_allow_html=True)
 
-# 5) If clicked, show a small note below the button area (but won't push the pinned bar up)
+# Show a small note if the button was clicked
 if button_clicked:
-    st.write("You clicked the button! (Placeholder behavior)")
-
+    st.write("You clicked the button! (placeholder)")
