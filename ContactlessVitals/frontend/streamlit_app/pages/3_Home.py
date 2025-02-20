@@ -1,56 +1,38 @@
+
 import streamlit as st
 
 st.set_page_config(page_title="How to Take Measurements", layout="wide")
 
-# Inject custom CSS
+# 1) Global CSS
 st.markdown("""
 <style>
-/* Light background */
-body, [data-testid="stAppViewContainer"], [data-testid="stApp"], .block-container {
+/* Force a light background, removing any user-level dark theme overrides if possible */
+body, [data-testid="stAppViewContainer"], [data-testid="stApp"] {
     background-color: #F9FAFB !important;
-    margin: 0;
+    margin: 0; 
     padding: 0;
     font-family: sans-serif;
 }
-/* Remove default top/bottom padding, add space for pinned footer */
+/* Remove default top/bottom padding, leave space for pinned footer */
 main .block-container {
     padding-top: 1rem !important;
-    padding-bottom: 6rem !important;
+    padding-bottom: 6rem !important; 
 }
 
-/* Top bar with arrow left, skip right (pure HTML, no columns) */
+/* Top bar container: arrow on left, skip on right */
 .top-bar {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 1.5rem;
-    height: 60px;
+    padding: 0 1.5rem; 
     margin-bottom: 1rem;
 }
 
-/* Centered container for heading + steps */
-.centered-container {
-    max-width: 600px;      /* limit total width */
-    margin: 0 auto;        /* center horizontally */
-    text-align: center;    /* center the text/icons inside */
-}
-
-/* Card for steps */
-.card {
-    background-color: #FFFFFF;
-    border: 1px solid #E5E7EB;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    border-radius: 0.5rem;
-    padding: 2rem;
-    margin-top: 1rem;
-    text-align: center;
-}
-
-/* Pinned footer (blue bar) */
+/* Pinned bright-blue footer at bottom */
 .footer-fixed {
     position: fixed;
-    bottom: 0;
-    left: 0;
+    bottom: 0; 
+    left: 0; 
     right: 0;
     background-color: #3B82F6;
     padding: 1rem;
@@ -63,7 +45,7 @@ main .block-container {
     display: block;
     margin: 0 auto;
     width: 100% !important;
-    max-width: 300px;
+    max-width: 300px; /* limit how wide it can grow */
     background-color: #3B82F6 !important;
     color: #FFFFFF !important;
     font-size: 1rem !important;
@@ -76,39 +58,61 @@ main .block-container {
 .footer-fixed .stButton button:hover {
     background-color: #2563EB !important;
 }
+
+/* Main content wrapper, fully centered */
+.centered-container {
+    max-width: 600px;         /* limit total width */
+    margin: 0 auto;           /* center horizontally */
+    text-align: center;       /* center all text/icons */
+}
+
+/* A white card for the steps */
+.card {
+    background-color: #FFFFFF;
+    border: 1px solid #E5E7EB;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    border-radius: 0.5rem;
+    padding: 2rem;
+    margin-top: 1rem;
+    text-align: center; /* ensure icons & text are centered inside */
+}
 </style>
 """, unsafe_allow_html=True)
 
 #####################################
-# Top Bar (arrow on left, skip on right)
+# 2) Top Bar
 #####################################
 st.markdown("""
 <div class="top-bar">
-  <!-- Arrow button (HTML). Replace onclick if you want a Streamlit callback. -->
+  <!-- Left arrow (HTML). If you need a Python callback, replace with st.button. -->
   <button type="button" style="background:none; border:none; cursor:pointer;"
           onclick="alert('Back arrow clicked (placeholder)')">
-    <svg style="width:24px; height:24px; color:#111827;"
+    <svg style="width:24px; height:24px; color:#111827;" 
          xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-      <path fill-rule="evenodd"
+      <path fill-rule="evenodd" 
             d="M9.707 16.707a1 1 0 01-1.414 
                0l-6-6a1 1 0 010-1.414l6-6a1 
                1 0 011.414 1.414L5.414 
                9H17a1 1 0 110 2H5.414l4.293 
-               4.293a1 1 0 010 1.414z"
+               4.293a1 1 0 010 1.414z" 
             clip-rule="evenodd"/>
     </svg>
   </button>
-
-  <!-- Skip button (HTML). Replace onclick if you want a Streamlit callback. -->
-  <button type="button" style="background:none; border:none; cursor:pointer; font-size:1rem; color:#111827;"
-          onclick="alert('Skip clicked (placeholder)')">
-    Skip
-  </button>
-</div>
 """, unsafe_allow_html=True)
 
+# Right side: "Skip" as a real Streamlit button
+colA, colB = st.columns([0.8, 0.2])
+with colA:
+    st.write("")  # filler
+with colB:
+    if st.button("Skip"):
+        st.warning("Skipping tutorial... (placeholder)")
+
+# Close the top-bar div
+st.markdown("</div>", unsafe_allow_html=True)
+
 #####################################
-# Centered Container (Heading + Steps)
+# 3) Centered Container for Heading + Steps
 #####################################
 st.markdown('<div class="centered-container">', unsafe_allow_html=True)
 
@@ -137,7 +141,7 @@ steps = [
                               2 0 0011.172 3H8.828a2 2 0 
                               00-1.414.586L6.293 4.707A1 
                               1 0 015.586 5H4zm6 9a3 3 0 
-                              100-6 3 3 0 000 6z"
+                              100-6 3 3 0 000 6z" 
                            clip-rule="evenodd"/>
                    </svg>""",
         "title": "Position Your Camera",
@@ -157,7 +161,7 @@ steps = [
                               1.913A13.07 13.07 0 
                               0110 17a13.07 13.07 
                               0 01-5.876-1.138A2.25 
-                              2.25 0 013 13.95v-.45z"
+                              2.25 0 013 13.95v-.45z" 
                            clip-rule="evenodd"/>
                    </svg>""",
         "title": "Stay Still",
@@ -171,7 +175,7 @@ steps = [
                               100 16 8 8 0 000-16zm1 
                               8a1 1 0 01-1 
                               1H6a1 1 0 110-2h3V5a1 
-                              1 0 112 0v3z"
+                              1 0 112 0v3z" 
                            clip-rule="evenodd"/>
                    </svg>""",
         "title": "Wait 30 Seconds",
@@ -179,7 +183,6 @@ steps = [
     }
 ]
 
-# Render each step
 for step in steps:
     st.markdown(step["icon"], unsafe_allow_html=True)
     st.markdown(f"""
@@ -191,13 +194,14 @@ for step in steps:
     </p>
     """, unsafe_allow_html=True)
 
-st.markdown("</div>", unsafe_allow_html=True)  # close .card
-st.markdown("</div>", unsafe_allow_html=True)  # close .centered-container
+st.markdown("</div>", unsafe_allow_html=True)  # close the .card
+
+st.markdown("</div>", unsafe_allow_html=True)  # close the .centered-container
 
 #####################################
-# Pinned Footer
+# 4) Pinned Footer
 #####################################
 st.markdown('<div class="footer-fixed">', unsafe_allow_html=True)
 if st.button("Got It, Let's Start"):
     st.success("Tutorial complete! (placeholder)")
-st.markdown("</div>", unsafe_allow_html=True)
+st.markdown('</div>', unsafe_allow_html=True)
