@@ -1,38 +1,121 @@
 import streamlit as st
 
-st.set_page_config(page_title="How to Take Measurements", layout="wide")
+st.set_page_config(page_title="How to Measure Your Vitals", layout="wide")
 
-# Inject custom CSS
+# Inject custom CSS for layout, cards, pinned footer, etc.
 st.markdown("""
 <style>
-/* Entire page: pure white background */
+/* White background for the entire page */
 body, [data-testid="stAppViewContainer"], [data-testid="stApp"], .block-container {
     background-color: #FFFFFF !important;
-    margin: 0; 
+    margin: 0;
     padding: 0;
     font-family: sans-serif;
 }
-/* Remove default Streamlit padding, leave space for pinned footer */
+
+/* Remove extra top/bottom padding, add space for pinned footer */
 main .block-container {
-    padding-top: 1rem !important;
+    padding-top: 2rem !important;
     padding-bottom: 6rem !important; /* space above pinned footer */
 }
 
-/* Top bar row with arrow (left) and skip (right) */
-.top-bar {
-    margin-bottom: 1rem;
+/* Centered container for heading & steps */
+.center-container {
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: center;
 }
 
-/* Pinned footer at bottom (blue bar) */
+/* Heading style */
+.center-container h1 {
+    font-size: 1.875rem;  /* ~ text-3xl */
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 0.5rem;
+}
+.center-container p.subtitle {
+    font-size: 1rem;      /* text-base */
+    color: #4B5563;
+    margin-bottom: 2rem;
+}
+
+/* Container that holds the 3 steps (stacked) */
+.steps-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem; /* spacing between cards */
+}
+
+/* Each step card */
+.step-card {
+    background-color: #FFFFFF;
+    border: 1px solid #E5E7EB;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+/* Step number badge in top-left corner */
+.step-badge {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background-color: #E5E7EB;
+    color: #111827;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 9999px; /* circle */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+/* Step text container (title + description) */
+.step-text {
+    flex: 1;
+    text-align: left;
+    margin-right: 1rem;
+}
+
+/* Step title */
+.step-title {
+    font-size: 1.125rem; /* ~ text-lg */
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 0.25rem;
+}
+/* Step description */
+.step-desc {
+    font-size: 1rem;
+    color: #4B5563;
+}
+
+/* Step image on the right side */
+.step-image {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 0.25rem;
+}
+
+/* Pinned footer at the bottom (blue bar) */
 .footer-fixed {
     position: fixed;
-    bottom: 0; left: 0; right: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
     background-color: #3B82F6;
     padding: 1rem;
     text-align: center;
     z-index: 9999;
     margin: 0;
 }
+/* Center the pinned footer button, make it wide */
 .footer-fixed .stButton button {
     display: block;
     margin: 0 auto;
@@ -50,93 +133,65 @@ main .block-container {
 .footer-fixed .stButton button:hover {
     background-color: #2563EB !important;
 }
-
-/* Centered container for the big image and text */
-.center-container {
-    max-width: 600px;
-    margin: 0 auto;       /* center horizontally */
-    text-align: center;   /* center the content inside */
-    padding-top: 1rem;
-}
-
-/* White card with a big image in the center */
-.card {
-    background-color: #FFFFFF;
-    border: 1px solid #E5E7EB;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    border-radius: 0.5rem;
-    padding: 2rem;
-    margin-top: 1rem;
-    text-align: center;
-}
-
-/* Large image in the card */
-.big-image {
-    display: block;
-    margin: 0 auto;
-    width: 256px;
-    height: 256px;
-    object-fit: cover;
-    margin-bottom: 1rem;
-}
 </style>
 """, unsafe_allow_html=True)
 
 ##########################
-# 1) Top Bar with real Streamlit buttons
-##########################
-# Create 3 columns: arrow on the left, empty in the middle, skip on the right
-col1, col2, col3 = st.columns([0.1, 0.8, 0.1])
-
-with col1:
-    if st.button("←"):
-        st.info("Back arrow clicked (placeholder)")
-
-with col2:
-    st.write("")  # empty center
-
-with col3:
-    if st.button("Skip"):
-        st.warning("Skipping tutorial... (placeholder)")
-
-##########################
-# 2) Centered Container with a White Card
+# Main Container
 ##########################
 st.markdown('<div class="center-container">', unsafe_allow_html=True)
 
-# Heading & Subtitle
+# Page heading
 st.markdown("""
-<h1 style="font-size: 1.875rem; font-weight: 700; color:#111827; margin-bottom: 0.5rem;">
-  How to Take Measurements
-</h1>
-<p style="font-size: 1rem; color:#4B5563; margin-bottom: 2rem;">
-  Follow these steps for accurate readings
-</p>
+<h1>How to Measure Your Vitals</h1>
+<p class="subtitle">Follow these simple steps for accurate measurements</p>
 """, unsafe_allow_html=True)
 
-# White card with a big image, title, and description
-st.markdown('<div class="card">', unsafe_allow_html=True)
+# Steps container
+st.markdown('<div class="steps-wrapper">', unsafe_allow_html=True)
 
-st.markdown("""
-<img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/default-placeholder.png"
-     class="big-image"
-     alt="Big camera image" />
+# Step data
+steps = [
+    {
+        "step_num": "1",
+        "title": "Position Your Face",
+        "description": "Center your face in the camera frame at arm's length distance",
+        "image_url": "https://storage.googleapis.com/uxpilot-auth.appspot.com/default-placeholder.png"
+    },
+    {
+        "step_num": "2",
+        "title": "Ensure Good Lighting",
+        "description": "Find a well-lit area, avoid backlighting",
+        "image_url": "https://storage.googleapis.com/uxpilot-auth.appspot.com/default-placeholder.png"
+    },
+    {
+        "step_num": "3",
+        "title": "Stay Still",
+        "description": "Hold your device steady for 30 seconds during measurement",
+        "image_url": "https://storage.googleapis.com/uxpilot-auth.appspot.com/default-placeholder.png"
+    },
+]
 
-<h2 style="font-size:1.5rem; font-weight:700; color:#111827; margin-bottom:0.5rem;">
-  Position Your Camera
-</h2>
-<p style="font-size:1rem; color:#4B5563; margin-bottom:0;">
-  Hold your phone 12 inches from your face in good lighting
-</p>
-""", unsafe_allow_html=True)
+# Render each step as a "card"
+for step in steps:
+    st.markdown(f"""
+    <div class="step-card">
+      <div class="step-badge">{step['step_num']}</div>
+      <div class="step-text">
+        <div class="step-title">{step['title']}</div>
+        <div class="step-desc">{step['description']}</div>
+      </div>
+      <img src="{step['image_url']}" alt="Step image" class="step-image" />
+    </div>
+    """, unsafe_allow_html=True)
 
-st.markdown('</div>', unsafe_allow_html=True)  # close card
+st.markdown('</div>', unsafe_allow_html=True)  # close steps-wrapper
 st.markdown('</div>', unsafe_allow_html=True)  # close center-container
 
 ##########################
-# 3) Pinned Footer
+# Pinned Footer
 ##########################
 st.markdown('<div class="footer-fixed">', unsafe_allow_html=True)
-if st.button("Got It, Let’s Start"):
+if st.button("Got It, Let's Start"):
     st.success("Tutorial complete! (placeholder)")
 st.markdown("</div>", unsafe_allow_html=True)
