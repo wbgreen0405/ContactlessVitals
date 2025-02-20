@@ -1,26 +1,14 @@
 import streamlit as st
 
-# Must be the first Streamlit command
-st.set_page_config(page_title="Splash", layout="wide")
-
-# Optionally hide Streamlit’s sidebar
-st.markdown(
-    """
-    <style>
-    [data-testid="stSidebar"] { display: none; }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
+# Do not call st.set_page_config here!
 
 splash_html = """
 <html>
 <head>
+  <!-- Include FontAwesome CSS if needed -->
   <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-        integrity="sha512-..."
-        crossorigin="anonymous"
-        referrerpolicy="no-referrer" />
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
   <style>
     body {
       margin: 0; padding: 0;
@@ -33,7 +21,6 @@ splash_html = """
       align-items: center;
       justify-content: center;
     }
-    /* Anchor covers the entire area, no underline, same tab */
     .full-link {
       text-decoration: none;
       color: inherit;
@@ -42,7 +29,7 @@ splash_html = """
       padding: 2rem;
     }
     .full-link:hover {
-      text-decoration: none; /* ensure no underline on hover */
+      text-decoration: none;
     }
     .white-circle {
       width: 8rem; height: 8rem;
@@ -56,7 +43,7 @@ splash_html = """
     }
     .icon-heart {
       font-size: 3rem;
-      color: #3b82f6; /* a nice blue color */
+      color: #3b82f6;
     }
     .title {
       font-size: 2.5rem;
@@ -76,15 +63,14 @@ splash_html = """
 </head>
 <body>
   <div class="splash-container">
-    <!-- Anchor link that navigates in the same tab -->
-    <!-- Use target="_self" to ensure same tab. Adjust href to your actual page. -->
-    <a class="full-link" href="?page=Onboarding" target="_self">
+    <!-- Clicking the heart (the full link) navigates to Onboarding -->
+    <a class="full-link" href="?page=2_Onboarding" target="_self">
       <div class="white-circle">
         <i class="fa-solid fa-heart icon-heart"></i>
       </div>
       <h1 class="title">VitalScan</h1>
       <p class="subtitle">Contactless Health Monitoring</p>
-      <p class="prompt">Please wait... (click anywhere to continue)</p>
+      <p class="prompt">Please wait... (or click the heart to continue)</p>
     </a>
   </div>
 </body>
