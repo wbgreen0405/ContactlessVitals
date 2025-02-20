@@ -31,11 +31,17 @@ steps = [
 colX, colY, colZ = st.columns([1, 2, 1])
 with colY:
     for i, step in enumerate(steps, start=1):
-        # Horizontal rule between steps
         st.markdown("---")
 
-        # Step title
-        st.markdown(f"### Step {i}: {step['title']}")
+        # Centered heading for Step X
+        st.markdown(
+            f"""
+            <h3 style="text-align: center; margin-bottom:0.5rem;">
+                Step {i}: {step['title']}
+            </h3>
+            """,
+            unsafe_allow_html=True
+        )
 
         # Centered image (via inline HTML)
         st.markdown(
@@ -47,8 +53,15 @@ with colY:
             unsafe_allow_html=True
         )
 
-        # Description
-        st.write(step["description"])
+        # Centered description
+        st.markdown(
+            f"""
+            <p style="text-align: center; color:#4B5563; margin-top:0.5rem;">
+                {step["description"]}
+            </p>
+            """,
+            unsafe_allow_html=True
+        )
 
     st.markdown("---")
 
@@ -75,7 +88,7 @@ footer_html = """
 """
 st.markdown(footer_html, unsafe_allow_html=True)
 
-# We'll create a placeholder for the button, so it doesn't push up the pinned bar
+# We'll create a placeholder for the button
 button_ph = st.empty()
 with button_ph.container():
     button_clicked = st.button("Got It, Let's Start", key="pinned-btn")
