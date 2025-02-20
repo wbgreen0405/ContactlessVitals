@@ -1,6 +1,9 @@
 [theme]
-base = "dark"
+base = "light"
+primaryColor = "#3B82F6"
+backgroundColor = "#F9FAFB"
+secondaryBackgroundColor = "#FFFFFF"
+textColor = "#111827"
+font = "sans serif"
+allow_user_theme_switch = false
 
-[ui]
-hide_streamlit_logo = true
-hide_menu_bar = true
