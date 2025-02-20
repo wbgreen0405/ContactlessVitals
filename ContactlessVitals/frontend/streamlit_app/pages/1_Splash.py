@@ -2,7 +2,7 @@ import streamlit as st
 
 st.set_page_config(page_title="Splash", layout="wide")
 
-# Hide Streamlit's default sidebar (optional):
+# Optionally hide Streamlit’s sidebar:
 st.markdown(
     """
     <style>
@@ -15,7 +15,7 @@ st.markdown(
 splash_html = """
 <html>
 <head>
-  <!-- If you’re using Font Awesome from a CDN: -->
+  <!-- If you need Font Awesome from a CDN: -->
   <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
         integrity="sha512-..."
@@ -26,14 +26,22 @@ splash_html = """
       margin:0; padding:0;
       font-family: sans-serif;
     }
-    /* Make the entire background clickable */
     .splash-container {
       min-height: 100vh;
       background: linear-gradient(to bottom right, #ccefff, #ccffe0);
       display: flex;
       align-items: center;
       justify-content: center;
-      cursor: pointer;  /* show pointer on hover */
+    }
+    /* The anchor covers the entire container */
+    .full-link {
+      display: block;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      text-decoration: none; /* remove underline */
+      color: inherit;        /* let text color inherit */
+      padding: 2rem;
     }
     .white-circle {
       width: 8rem; height: 8rem;
@@ -62,17 +70,18 @@ splash_html = """
   </style>
 </head>
 <body>
-  <!-- On click anywhere, go to /2_Onboarding -->
-  <div class="splash-container" onclick="window.location.href='/2_Onboarding'">
-    <div style="text-align:center;">
+  <!-- Entire container -->
+  <div class="splash-container">
+    <!-- Anchor link that navigates to the next page -->
+    <a class="full-link" href="/2_Onboarding">
       <div class="white-circle">
-        <!-- Heart icon -->
+        <!-- Heart icon (Font Awesome) -->
         <i class="fa-solid fa-heart" style="font-size:3rem; color:#3b82f6;"></i>
       </div>
       <h1 class="title">VitalScan</h1>
       <p class="subtitle">Contactless Health Monitoring</p>
       <p class="prompt">Please wait... (click anywhere to continue)</p>
-    </div>
+    </a>
   </div>
 </body>
 </html>
