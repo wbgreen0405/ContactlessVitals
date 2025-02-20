@@ -50,11 +50,12 @@ main .block-container {
 .step-card {
     background-color: #FFFFFF;
     border: 1px solid #E5E7EB;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.08);
     border-radius: 0.5rem;
-    padding: 1.5rem;
+    padding: 2rem;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     position: relative;
 }
 
@@ -65,13 +66,13 @@ main .block-container {
     left: 1rem;
     background-color: #E5E7EB;
     color: #111827;
-    width: 1.5rem;
-    height: 1.5rem;
+    width: 2rem;
+    height: 2rem;
     border-radius: 9999px; /* circle */
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.75rem;
+    font-size: 0.875rem;
     font-weight: 600;
 }
 
@@ -79,7 +80,7 @@ main .block-container {
 .step-text {
     flex: 1;
     text-align: left;
-    margin-right: 1rem;
+    margin-right: 1.5rem; /* space between text and image */
 }
 
 /* Step title */
@@ -87,20 +88,22 @@ main .block-container {
     font-size: 1.125rem; /* ~ text-lg */
     font-weight: 700;
     color: #111827;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.5rem;
 }
 /* Step description */
 .step-desc {
     font-size: 1rem;
     color: #4B5563;
+    line-height: 1.4;
 }
 
-/* Step image on the right side */
+/* Step image on the right side (bigger than 80px) */
 .step-image {
-    width: 80px;
-    height: 80px;
+    width: 140px;
+    height: 100px;
     object-fit: cover;
     border-radius: 0.25rem;
+    background-color: #F9FAFB;
 }
 
 /* Pinned footer at the bottom (blue bar) */
@@ -192,6 +195,7 @@ st.markdown('</div>', unsafe_allow_html=True)  # close center-container
 # Pinned Footer
 ##########################
 st.markdown('<div class="footer-fixed">', unsafe_allow_html=True)
-if st.button("Got It, Let's Start"):
+if st.button("Got It, Let’s Start"):
     st.success("Tutorial complete! (placeholder)")
 st.markdown("</div>", unsafe_allow_html=True)
+
