@@ -62,22 +62,19 @@ with colY:
     st.markdown("---")
     
 # 4) Pinned Footer with real Streamlit button, forcing the button to be blue
-footer_html = """
+# Style the Streamlit button using CSS injection
+st.markdown("""
 <style>
 .footer-fixed {
     position: fixed;
     bottom: 0; left: 0; right: 0;
-    padding: 1rem; /* Keep the padding */
+    padding: 1rem;
     text-align: center;
     z-index: 9999;
     margin: 0;
 }
-/* Force the button inside the pinned footer to be blue */
-.footer-fixed button {
-    display: block;
-    margin: 0 auto;  /* Center the button */
-    width: auto !important; /* Adjust width as needed */
-    background-color: #3B82F6 !important; /* Force button background */
+.footer-fixed .stButton button {  /* Target the actual Streamlit button */
+    background-color: #3B82F6 !important;
     color: #FFFFFF !important;
     font-size: 1rem !important;
     font-weight: 500 !important;
@@ -85,33 +82,25 @@ footer_html = """
     border: none !important;
     padding: 0.75rem 1.5rem !important;
     cursor: pointer;
+    width: auto !important; /* Adjust width as needed */
+    display: block; /* Make it a block element */
+    margin: 0 auto; /* Center the button */
 }
-.footer-fixed button:hover {
+
+.footer-fixed .stButton button:hover {
     background-color: #2563EB !important;
 }
+
 </style>
-<div class="footer-fixed">
-    <button id="my-button" type="button" class="stButton">Got It, Let's Start</button>
-</div>
-"""
-st.markdown(footer_html, unsafe_allow_html=True)
-
-
-# Inject JavaScript to handle the button click and Streamlit updates
-st.markdown("""
-<script>
-    const button = document.getElementById('my-button');
-    button.addEventListener('click', function() {
-        // Send a message to Streamlit
-        Streamlit.set({ 'button_clicked': true }); // Using Streamlit.set
-    });
-</script>
 """, unsafe_allow_html=True)
 
-# Important: Initialize the button_clicked state
-if 'button_clicked' not in st.session_state:
-    st.session_state.button_clicked = False
+# Create the Streamlit button within the footer div
+col1, col2, col3 = st.columns([1,3,1])
+with col2:
+    with st.container():
+        st.markdown('<div class="footer-fixed">', unsafe_allow_html=True)  # Start the footer div
+        button_clicked = st.button("Got It, Let's Start") # The actual Streamlit button
+        st.markdown('</div>', unsafe_allow_html=True)  # Close the footer div
 
-if st.session_state.button_clicked:
+if button_clicked:
     st.info("Tutorial complete! (placeholder)")
-    st.session_state.button_clicked = False # Reset to prevent multiple triggers
