@@ -92,10 +92,29 @@ footer_html = """
     background-color: #2563EB !important;
 }
 </style>
-<div class="footer-fixed"></div>
+<div class="footer-fixed">
+    <div style="display: flex; justify-content: center;">  <button id="my-button" type="button" class="stButton">Got It, Let's Start</button>
+    </div>
+</div>
 """
 st.markdown(footer_html, unsafe_allow_html=True)
 
-button_clicked = st.button("Got It, Let's Start", key="pinned-btn")
-if button_clicked:
+
+# Inject JavaScript to handle the button click and Streamlit updates
+st.markdown("""
+<script>
+    const button = document.getElementById('my-button');
+    button.addEventListener('click', function() {
+        // Send a message to Streamlit
+        Streamlit.set({ 'button_clicked': true }); // Using Streamlit.set
+    });
+</script>
+""", unsafe_allow_html=True)
+
+# Important: Initialize the button_clicked state
+if 'button_clicked' not in st.session_state:
+    st.session_state.button_clicked = False
+
+if st.session_state.button_clicked:
     st.info("Tutorial complete! (placeholder)")
+    st.session_state.button_clicked = False # Reset to prevent multiple triggers
