@@ -1,19 +1,20 @@
 import streamlit as st
 
-st.set_page_config(page_title="How to Measure Your Vitals", layout="wide")
+st.set_page_config(page_title="Centered Steps", layout="wide")
 
-# 1) Inline CSS to center everything
+# Inline CSS that centers everything
 st.markdown("""
 <style>
-/* Force a light background */
+/* Force a near-white background */
 body, [data-testid="stAppViewContainer"], [data-testid="stApp"], .block-container {
     background-color: #F9FAFB !important;
-    margin: 0;
+    margin: 0; 
     padding: 0;
     font-family: sans-serif;
 }
 
-/* Remove default top/bottom padding, leave space for pinned footer */
+/* Remove default top/bottom padding, 
+   leave space for pinned footer at bottom */
 main .block-container {
     padding-top: 2rem !important;
     padding-bottom: 6rem !important;
@@ -23,15 +24,15 @@ main .block-container {
 .center-page {
     display: flex;
     flex-direction: column;
-    align-items: center;    /* center all content horizontally */
-    justify-content: flex-start;  /* from the top down */
+    align-items: center;  /* horizontally center all content */
+    justify-content: flex-start;
     width: 100%;
     margin: 0 auto;
-    text-align: center;     /* center text inline */
-    max-width: 700px;       /* limit how wide the content can get */
+    text-align: center;   /* center text inline */
+    max-width: 700px;     /* limit how wide content can get */
 }
 
-/* Each step “card”: minimal border, everything stacked */
+/* Each step card: minimal border, stacked content, centered text */
 .step-card {
     width: 100%;
     max-width: 600px;
@@ -40,6 +41,10 @@ main .block-container {
     background-color: #FFFFFF;
     margin-bottom: 1.5rem;
     padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
 }
 
 /* Step number badge */
@@ -54,7 +59,7 @@ main .block-container {
     justify-content: center;
     font-size: 0.875rem;
     font-weight: 600;
-    margin: 0 auto 1rem auto; /* center horizontally, space below */
+    margin: 0 auto 1rem auto;
 }
 
 /* Step image */
@@ -64,7 +69,7 @@ main .block-container {
     object-fit: cover;
     border-radius: 0.25rem;
     background-color: #F9FAFB;
-    margin: 0 auto 1rem auto; /* center horizontally, space below */
+    margin: 0 auto 1rem auto;
 }
 
 /* Step title & desc */
@@ -80,7 +85,7 @@ main .block-container {
     line-height: 1.4;
 }
 
-/* Pinned footer */
+/* Pinned footer (blue bar) at bottom */
 .footer-fixed {
     position: fixed;
     bottom: 0;
@@ -92,7 +97,6 @@ main .block-container {
     z-index: 9999;
     margin: 0;
 }
-/* Center the pinned footer button, make it wide */
 .footer-fixed .stButton button {
     display: block;
     margin: 0 auto;
@@ -113,13 +117,10 @@ main .block-container {
 </style>
 """, unsafe_allow_html=True)
 
-##########################
-# 2) Title & Steps
-##########################
-# We'll wrap everything in one .center-page div so it’s all horizontally centered
+# 1) Container to hold everything
 st.markdown('<div class="center-page">', unsafe_allow_html=True)
 
-# Heading
+# 2) Heading & subtitle
 st.markdown("""
 <h1 style="margin-bottom:0.5rem;">How to Measure Your Vitals</h1>
 <p style="color:#4B5563; margin-bottom:2rem;">
@@ -127,7 +128,7 @@ st.markdown("""
 </p>
 """, unsafe_allow_html=True)
 
-# Steps data
+# 3) Steps data
 steps = [
     {
         "step_num": "1",
@@ -149,7 +150,7 @@ steps = [
     },
 ]
 
-# Render each step
+# 4) Render steps
 for step in steps:
     st.markdown(f"""
     <div class="step-card">
@@ -160,15 +161,13 @@ for step in steps:
     </div>
     """, unsafe_allow_html=True)
 
-st.markdown("</div>", unsafe_allow_html=True)  # close center-page
+st.markdown("</div>", unsafe_allow_html=True)  # close .center-page
 
-##########################
-# 3) Pinned Footer
-##########################
+# 5) Pinned footer
 st.markdown('<div class="footer-fixed">', unsafe_allow_html=True)
 button_clicked = st.button("Got It, Let's Start")
 st.markdown("</div>", unsafe_allow_html=True)
 
-# Show a small note if the button was clicked
 if button_clicked:
-    st.write("You clicked the button! (placeholder)")
+    st.write("Button was clicked. (Placeholder)")
+
