@@ -1,23 +1,14 @@
 import streamlit as st
 
-# Configure the main app page (only call set_page_config once, here!)
-st.set_page_config(
-    page_title="Contactless Mobile Vital Signs",
-    layout="wide"
-)
+# Optional: Hide default sidebar navigation via configuration
+st.set_page_config(page_title="Contactless Mobile Vital Signs", layout="wide")
 
-st.title("Contactless Mobile Vital Signs")
-st.write("Welcome to the Contactless Mobile Vital Signs app. Use the buttons below to navigate.")
+st.markdown("## Welcome to Contactless Mobile Vital Signs")
+st.markdown("Use the links below to navigate to different pages:")
 
-# Navigation buttons using st.switch_page() to jump to pages in /pages/
-if st.button("Splash Screen"):
-    st.switch_page("1_Splash")        # Must match the name of the .py file in pages/ (minus the .py)
-if st.button("Onboarding"):
-    st.switch_page("2_Onboarding")
-if st.button("Home"):
-    st.switch_page("3_Home")
-if st.button("Measurement"):
-    st.switch_page("4_Measurement")
-if st.button("History & Trends"):
-    st.switch_page("5_History")
-
+# Custom navigation using st.page_link:
+st.page_link("Splash", page_name="1_Splash", icon="🌅")
+st.page_link("Onboarding", page_name="2_Onboarding", icon="📝")
+st.page_link("Home", page_name="3_Home", icon="🏠")
+st.page_link("Measurement", page_name="4_Measurement", icon="🎥")
+st.page_link("History & Trends", page_name="5_History", icon="📈")
