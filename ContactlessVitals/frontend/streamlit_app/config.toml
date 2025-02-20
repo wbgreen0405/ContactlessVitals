@@ -1,0 +1,6 @@
+[theme]
+base = "dark"
+
+[ui]
+hide_streamlit_logo = true
+hide_menu_bar = true
