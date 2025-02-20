@@ -7,11 +7,8 @@ st.set_page_config(page_title="Quick Start", layout="wide")
 ###########################
 colA, colB = st.columns([9,1])
 with colA:
-    # Center "Quick Start" within colA via inline HTML
     st.markdown("<h2 style='margin:0; text-align:center; width:100%;'>Quick Start</h2>", unsafe_allow_html=True)
-
 with colB:
-    # "X" button on the right
     if st.button("✕", key="close_quickstart"):
         st.write("Closed quick start (placeholder)")
 
@@ -22,9 +19,7 @@ st.write("---")  # horizontal rule
 ###########################
 c1, c2, c3 = st.columns([1,2,1])
 with c2:
-    # Center the heading
     st.markdown("<h3 style='text-align:center;'>Before You Begin</h3>", unsafe_allow_html=True)
-    # Center the bullet points via inline HTML
     st.markdown("""
     <ul style="list-style-type: disc; text-align:center; margin:0 auto; padding:0;">
       <li>Ensure good lighting on your face</li>
@@ -38,7 +33,6 @@ with c2:
 ###########################
 col1, col2, col3 = st.columns([1,2,1])
 with col2:
-    # We'll use inline HTML + CSS to create a dark circle with text in the center
     st.markdown(
         """
         <div style="
@@ -61,11 +55,10 @@ with col2:
     )
 
 ###########################
-# 4) "Start Measurement" Button (blue)
+# 4) "Start Measurement" Button (blue) & Camera Activation
 ###########################
 colA2, colB2, colC2 = st.columns([1,2,1])
 with colB2:
-    # Minimal CSS to force the button blue
     st.markdown("""
     <style>
     .start-btn button {
@@ -86,8 +79,55 @@ with colB2:
     }
     </style>
     """, unsafe_allow_html=True)
-
+    
     st.markdown("<div class='start-btn'>", unsafe_allow_html=True)
     if st.button("Start Measurement", key="start_measure"):
-        st.success("Measurement started (placeholder).")
+        st.session_state.start_measure = True
     st.markdown("</div>", unsafe_allow_html=True)
+
+# Activate camera if measurement is started
+if "start_measure" in st.session_state and st.session_state.start_measure:
+    st.markdown("<h3 style='text-align:center;'>Activate Camera</h3>", unsafe_allow_html=True)
+    img_file_buffer = st.camera_input("Please position your face for measurement")
+    if img_file_buffer is not None:
+        st.image(img_file_buffer)
+
+###########################
+# 5) Pinned Footer with Blue Button
+###########################
+footer_html = """
+<style>
+.footer-fixed {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background-color: #3B82F6;
+    padding: 1rem;
+    text-align: center;
+    margin: 0;
+    z-index: 9999;
+}
+.footer-fixed button {
+    display: block;
+    margin: 0 auto;
+    width: 100% !important;
+    max-width: 300px;
+    background-color: #3B82F6 !important;
+    color: #FFFFFF !important;
+    font-size: 1rem !important;
+    font-weight: 500 !important;
+    border-radius: 0.5rem !important;
+    border: none !important;
+    padding: 0.75rem 1.5rem !important;
+    cursor: pointer;
+}
+.footer-fixed button:hover {
+    background-color: #2563EB !important;
+}
+</style>
+<div class="footer-fixed"></div>
+"""
+st.markdown(footer_html, unsafe_allow_html=True)
+
+button_clicked = st.button("Got It, Let's Start", key="pinned-btn")
+if button_clicked:
+    st.info("Tutorial complete! (placeholder)")
