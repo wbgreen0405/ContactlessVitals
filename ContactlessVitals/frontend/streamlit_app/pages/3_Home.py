@@ -108,4 +108,13 @@ with card_col:
         </h4>
         <p style="font-size:1rem; color:#4B5563; margin-top:0.25rem; margin-bottom:1.5rem;">
           {step['description']}
-     
+        </p>
+        """, unsafe_allow_html=True)
+
+    st.markdown("</div>", unsafe_allow_html=True)
+
+# 5) Pinned Footer: "Got It, Let's Start"
+st.markdown('<div class="footer-fixed">', unsafe_allow_html=True)
+if st.button("Got It, Let's Start"):
+    st.success("Tutorial complete! (placeholder)")
+st.markdown('</div>', unsafe_allow_html=True)
