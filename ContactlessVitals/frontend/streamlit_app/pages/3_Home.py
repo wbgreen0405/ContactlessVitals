@@ -5,8 +5,8 @@ st.set_page_config(page_title="How to Measure Your Vitals", layout="wide")
 # 1) Title & Subtitle (centered using columns)
 colA, colB, colC = st.columns([1, 2, 1])
 with colB:
-    st.markdown("<h1 style='text-align: center;'>How to Measure Your Vitals</h1>", unsafe_allow_html=True)
-    st.markdown("<p style='text-align: center;'>Follow these simple steps for accurate measurements</p>", unsafe_allow_html=True)
+    st.title("How to Measure Your Vitals")
+    st.write("Follow these simple steps for accurate measurements")
 
 # 2) Steps Data
 steps = [
@@ -95,9 +95,10 @@ footer_html = """
 """
 st.markdown(footer_html, unsafe_allow_html=True)
 
-# Create a placeholder for the button
+# We'll create a placeholder for the button
 button_ph = st.empty()
 with button_ph.container():
+    # Button text is now "Got It, Let's Start" to match your request
     button_clicked = st.button("Got It, Let's Start", key="pinned-btn")
 
 if button_clicked:
