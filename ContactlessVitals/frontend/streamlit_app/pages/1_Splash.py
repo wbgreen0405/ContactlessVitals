@@ -1,10 +1,9 @@
-# pages/1_Splash.py
 import streamlit as st
 
-# Must be the first Streamlit command:
+# Must be first
 st.set_page_config(page_title="Splash", layout="wide")
 
-# Hide the default sidebar (optional)
+# Hide the sidebar (optional)
 st.markdown(
     """
     <style>
@@ -16,45 +15,66 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# The next page (e.g. 2_Onboarding.py)
-onboarding_page_path = "/2_Onboarding"  # Adjust if needed
-
-splash_html = f"""
+# HTML content
+splash_html = """
 <html>
 <head>
-  <!-- If you haven't already included Font Awesome globally, do so here: -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"
-          crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <!-- Use CSS link for Font Awesome -->
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-..."
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer" />
+  <style>
+    body {
+      margin:0; padding:0;
+      font-family: sans-serif;
+    }
+    .splash-container {
+      min-height:100vh;
+      background: linear-gradient(to bottom right, #ccefff, #ccffe0);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+    }
+    .white-circle {
+      width:8rem; height:8rem;
+      background-color:white;
+      border-radius:50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      margin:0 auto;
+      box-shadow:0 0 10px rgba(0,0,0,0.2);
+    }
+    .title {
+      font-size:2.5rem; 
+      color:#1f2937; 
+      margin-top:1rem;
+    }
+    .subtitle {
+      font-size:1.25rem; 
+      color:#1f2937;
+    }
+    .prompt {
+      margin-top:1rem; 
+      font-size:0.875rem; 
+      color:#6b7280;
+    }
+  </style>
 </head>
-<body style="margin:0; padding:0;">
-  <div onclick="window.location.href='{onboarding_page_path}'"
-       style="
-         min-height:100vh; 
-         background: linear-gradient(to bottom right, #ccefff, #ccffe0);
-         display:flex; 
-         align-items:center; 
-         justify-content:center; 
-         cursor:pointer;">
+<body>
+  <div class="splash-container" onclick="window.location.href='/2_Onboarding'">
     <div style="text-align:center;">
-      <div style="
-        width:8rem; 
-        height:8rem; 
-        background-color:white; 
-        border-radius:50%; 
-        display:flex; 
-        align-items:center; 
-        justify-content:center; 
-        margin:0 auto; 
-        box-shadow:0 0 10px rgba(0,0,0,0.2);
-      ">
-        <!-- The heart icon -->
-        <i class="fa-solid fa-heart-pulse" style="font-size:3rem; color:#3b82f6;"></i>
+      <div class="white-circle">
+        <!-- Using fa-solid fa-heart to test. 
+             If you want fa-heart-pulse, change to fa-heart-pulse. -->
+        <i class="fa-solid fa-heart" style="font-size:3rem; color:#3b82f6;"></i>
       </div>
-      <h1 style="font-size:2.5rem; color:#1f2937; margin-top:1rem;">VitalScan</h1>
-      <p style="font-size:1.25rem; color:#1f2937;">Contactless Health Monitoring</p>
-      <p style="margin-top:1rem; font-size:0.875rem; color:#6b7280;">
-        Please wait... (click anywhere to continue)
-      </p>
+      <h1 class="title">VitalScan</h1>
+      <p class="subtitle">Contactless Health Monitoring</p>
+      <p class="prompt">Please wait... (click anywhere to continue)</p>
     </div>
   </div>
 </body>
