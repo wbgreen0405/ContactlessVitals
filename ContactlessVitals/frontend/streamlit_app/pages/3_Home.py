@@ -60,25 +60,26 @@ with colY:
             unsafe_allow_html=True
         )
     st.markdown("---")
-
-# 4) Pinned Footer with minimal HTML + real Streamlit button
+    
+# 4) Pinned Footer with real Streamlit button, forcing the button to be blue
 footer_html = """
 <style>
-.footer-bar {
+.footer-fixed {
     position: fixed;
     bottom: 0; left: 0; right: 0;
-    background-color: #3B82F6;
+    background-color: #3B82F6; /* Blue background for the bar */
     padding: 1rem;
     text-align: center;
-    margin: 0;
     z-index: 9999;
+    margin: 0;
 }
-.footer-bar .stButton button {
+/* Force the button inside the pinned footer to be blue */
+.footer-fixed button {
     display: block;
     margin: 0 auto;
     width: 100% !important;
     max-width: 300px;
-    background-color: #3B82F6 !important;
+    background-color: #3B82F6 !important; /* Force button background */
     color: #FFFFFF !important;
     font-size: 1rem !important;
     font-weight: 500 !important;
@@ -87,19 +88,14 @@ footer_html = """
     padding: 0.75rem 1.5rem !important;
     cursor: pointer;
 }
-.footer-bar .stButton button:hover {
+.footer-fixed button:hover {
     background-color: #2563EB !important;
 }
 </style>
-<div class="footer-bar" id="pinned-footer"></div>
+<div class="footer-fixed"></div>
 """
 st.markdown(footer_html, unsafe_allow_html=True)
 
-# We'll create a placeholder for the button
-button_ph = st.empty()
-with button_ph.container():
-    # Button text is now "Got It, Let's Start" to match your request
-    button_clicked = st.button("Got It, Let's Start", key="pinned-btn")
-
+button_clicked = st.button("Got It, Let's Start", key="pinned-btn")
 if button_clicked:
     st.info("Tutorial complete! (placeholder)")
