@@ -28,19 +28,31 @@ steps = [
 ]
 
 # 3) Steps (centered in the middle column)
-colX, colY, colZ = st.columns([1,2,1])
+colX, colY, colZ = st.columns([1, 2, 1])
 with colY:
     for i, step in enumerate(steps, start=1):
-        # Each step "card"
+        # Horizontal rule between steps
         st.markdown("---")
+
+        # Step title
         st.markdown(f"### Step {i}: {step['title']}")
-        st.image(step["image_url"], width=200)
+
+        # Centered image (via inline HTML)
+        st.markdown(
+            f"""
+            <div style="text-align: center;">
+                <img src="{step['image_url']}" style="width:200px; border-radius:4px;" />
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+        # Description
         st.write(step["description"])
 
     st.markdown("---")
 
 # 4) Pinned Footer with minimal HTML + real Streamlit button
-#    We'll insert a <div> pinned at bottom, with a blue background.
 footer_html = """
 <style>
 .footer-bar {
@@ -55,7 +67,6 @@ footer_html = """
 .footer-btn {
     display: block;
     margin: 0 auto;
-    width: 100%% !important;
     max-width: 300px;
     font-weight: 500;
 }
@@ -67,8 +78,6 @@ st.markdown(footer_html, unsafe_allow_html=True)
 # We'll create a placeholder for the button, so it doesn't push up the pinned bar
 button_ph = st.empty()
 with button_ph.container():
-    # This will appear after the pinned bar in normal flow,
-    # but visually the pinned bar is over it. So let's see if it lines up well.
     button_clicked = st.button("Got It, Let's Start", key="pinned-btn")
 
 if button_clicked:
