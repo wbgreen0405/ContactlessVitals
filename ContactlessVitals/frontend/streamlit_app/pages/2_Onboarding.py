@@ -2,25 +2,25 @@ import streamlit as st
 
 st.set_page_config(layout="wide", page_title="Camera Access Required")
 
-# 1) Inject CSS to style the page background, remove extra padding, and style Streamlit buttons
+# Inject CSS for background, padding, and button styling
 st.markdown("""
 <style>
-/* Light gray page background (like Tailwind bg-gray-50) */
+/* Light gray background, similar to Tailwind bg-gray-50 */
 body {
     background-color: #F9FAFB;
     margin: 0;
     padding: 0;
     font-family: sans-serif;
 }
-/* Remove default Streamlit padding */
+/* Remove some default Streamlit padding */
 main .block-container {
     padding-top: 2rem !important;
     padding-bottom: 2rem !important;
 }
-/* Center and style the Streamlit buttons in this app */
+/* Center and style the Streamlit buttons */
 .stButton > button {
-    display: block;                /* so margin: auto can center it */
-    margin: 1rem auto;            /* auto left/right => centered */
+    display: block;                
+    margin: 1rem auto;            /* center horizontally */
     background-color: #3B82F6 !important;  /* Tailwind primary-500 */
     color: #ffffff !important;    
     border-radius: 0.5rem !important;      /* rounded-lg */
@@ -37,7 +37,7 @@ main .block-container {
 </style>
 """, unsafe_allow_html=True)
 
-# 2) Page title and subtitle (centered)
+# 1) Page Title & Subtitle (centered)
 st.markdown("""
 <div style="text-align: center; margin-bottom: 2rem;">
   <h1 style="
@@ -59,6 +59,7 @@ st.markdown("""
 # --------------------
 # CARD 1: Enable Camera Access
 # --------------------
+# Open the card container (but don't close it yet)
 st.markdown("""
 <div style="
   background-color: #FFFFFF; 
@@ -97,20 +98,23 @@ st.markdown("""
   <p style="
     font-size: 1rem; 
     color: #4B5563;   /* text-base-600 */
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     line-height: 1.5;">
     Your camera will only be used during vital measurements. No videos or images are stored.
   </p>
-</div>
 """, unsafe_allow_html=True)
 
-# Actual Streamlit button, centered & styled via CSS above
+# Place the Streamlit button *before* closing the card
 if st.button("Allow Camera Access"):
     st.success("Camera access granted! (Placeholder)")
+
+# Now close the card's div
+st.markdown("</div>", unsafe_allow_html=True)
 
 # --------------------
 # CARD 2: Privacy Guarantee
 # --------------------
+# Open the card container
 st.markdown("""
 <div style="
   background-color: #FFFFFF; 
@@ -129,22 +133,25 @@ st.markdown("""
     margin-bottom: 1rem;">
     Privacy Guarantee
   </h2>
+
+  <!-- Bullet points: remove max-width so it aligns nicely, or keep a narrower column if you prefer -->
   <ul style="
     list-style-type: disc; 
     list-style-position: inside; 
-    margin: 1rem auto 1.5rem auto; 
-    max-width: 400px; 
+    margin: 0 auto 1.5rem auto; 
     padding: 0; 
     text-align: left; 
     color: #4B5563;       /* text-base-600 */
     font-size: 1rem;">
-    <li>All measurements are processed locally on your device</li>
-    <li>Your data is encrypted and never shared without consent</li>
-    <li>You can delete your data at any time</li>
+    <li style="margin-bottom: 0.5rem;">All measurements are processed locally on your device</li>
+    <li style="margin-bottom: 0.5rem;">Your data is encrypted and never shared without consent</li>
+    <li style="margin-bottom: 0.5rem;">You can delete your data at any time</li>
   </ul>
-</div>
 """, unsafe_allow_html=True)
 
-# "Read Privacy Policy" button, also centered & styled
+# Place the Streamlit button for "Read Privacy Policy" here
 if st.button("Read Privacy Policy"):
     st.info("Privacy policy details here (placeholder).")
+
+# Close the card's div
+st.markdown("</div>", unsafe_allow_html=True)
