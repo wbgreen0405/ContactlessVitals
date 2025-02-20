@@ -2,33 +2,38 @@ import streamlit as st
 
 st.set_page_config(page_title="How to Take Measurements", layout="wide")
 
-# 1) Global CSS for layout & pinned footer
+# 1) Global CSS
 st.markdown("""
 <style>
-/* Force a light background */
+/* Force a light background, removing any user-level dark theme overrides if possible */
 body, [data-testid="stAppViewContainer"], [data-testid="stApp"] {
     background-color: #F9FAFB !important;
-    margin: 0; padding: 0;
+    margin: 0; 
+    padding: 0;
     font-family: sans-serif;
 }
-/* Remove default top/bottom padding, add space for pinned footer */
+/* Remove default top/bottom padding, leave space for pinned footer */
 main .block-container {
     padding-top: 1rem !important;
     padding-bottom: 6rem !important; 
 }
-/* A top bar for arrow (left) + skip (right) */
+
+/* Top bar container: arrow on left, skip on right */
 .top-bar {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 1.5rem;
+    padding: 0 1.5rem; 
     margin-bottom: 1rem;
 }
-/* The pinned bright-blue footer at bottom */
+
+/* Pinned bright-blue footer at bottom */
 .footer-fixed {
     position: fixed;
-    bottom: 0; left: 0; right: 0;
-    background-color: #3B82F6; /* bright blue */
+    bottom: 0; 
+    left: 0; 
+    right: 0;
+    background-color: #3B82F6;
     padding: 1rem;
     text-align: center;
     z-index: 9999;
@@ -52,13 +57,15 @@ main .block-container {
 .footer-fixed .stButton button:hover {
     background-color: #2563EB !important;
 }
-/* A centered container for the heading & steps */
-.center-container {
-    max-width: 600px;      /* optional: limit total width */
-    margin: 0 auto;        /* center horizontally */
-    text-align: center;    /* center all text/icons inside */
+
+/* Main content wrapper, fully centered */
+.centered-container {
+    max-width: 600px;         /* limit total width */
+    margin: 0 auto;           /* center horizontally */
+    text-align: center;       /* center all text/icons */
 }
-/* The white card that holds the steps */
+
+/* A white card for the steps */
 .card {
     background-color: #FFFFFF;
     border: 1px solid #E5E7EB;
@@ -66,6 +73,7 @@ main .block-container {
     border-radius: 0.5rem;
     padding: 2rem;
     margin-top: 1rem;
+    text-align: center; /* ensure icons & text are centered inside */
 }
 </style>
 """, unsafe_allow_html=True)
@@ -75,7 +83,7 @@ main .block-container {
 #####################################
 st.markdown("""
 <div class="top-bar">
-  <!-- Left arrow as plain HTML -->
+  <!-- Left arrow (HTML). If you need a Python callback, replace with st.button. -->
   <button type="button" style="background:none; border:none; cursor:pointer;"
           onclick="alert('Back arrow clicked (placeholder)')">
     <svg style="width:24px; height:24px; color:#111827;" 
@@ -92,20 +100,20 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Right side: "Skip" as a real Streamlit button
-col1, col2 = st.columns([0.8, 0.2])
-with col1:
-    st.write("")
-with col2:
+colA, colB = st.columns([0.8, 0.2])
+with colA:
+    st.write("")  # filler
+with colB:
     if st.button("Skip"):
         st.warning("Skipping tutorial... (placeholder)")
 
-# Close top bar div
+# Close the top-bar div
 st.markdown("</div>", unsafe_allow_html=True)
 
 #####################################
-# 3) Centered Container for Heading + Card
+# 3) Centered Container for Heading + Steps
 #####################################
-st.markdown('<div class="center-container">', unsafe_allow_html=True)
+st.markdown('<div class="centered-container">', unsafe_allow_html=True)
 
 # Heading & Subtitle
 st.markdown("""
@@ -185,9 +193,9 @@ for step in steps:
     </p>
     """, unsafe_allow_html=True)
 
-st.markdown("</div>", unsafe_allow_html=True)  # close .card
+st.markdown("</div>", unsafe_allow_html=True)  # close the .card
 
-st.markdown("</div>", unsafe_allow_html=True)  # close .center-container
+st.markdown("</div>", unsafe_allow_html=True)  # close the .centered-container
 
 #####################################
 # 4) Pinned Footer
