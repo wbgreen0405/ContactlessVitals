@@ -73,7 +73,8 @@ st.markdown("""
     z-index: 9999;
     margin: 0;
 }
-.footer-fixed .stButton button {  /* Target the actual Streamlit button */
+/* CORRECT CSS SELECTOR */
+.footer-fixed .stButton > button {  /*  > is important to select direct child */
     background-color: #3B82F6 !important;
     color: #FFFFFF !important;
     font-size: 1rem !important;
@@ -87,7 +88,7 @@ st.markdown("""
     margin: 0 auto; /* Center the button */
 }
 
-.footer-fixed .stButton button:hover {
+.footer-fixed .stButton > button:hover {
     background-color: #2563EB !important;
 }
 
