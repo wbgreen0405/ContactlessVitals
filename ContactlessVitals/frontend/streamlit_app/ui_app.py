@@ -1,3 +1,4 @@
+import time
 import streamlit as st
 import streamlit.components.v1 as components
 
@@ -6,6 +7,7 @@ import streamlit.components.v1 as components
 # --------------------------
 TAILWIND_HEADER = """
 <head>
+  <meta http-equiv="refresh" content="3; URL='?screen=Onboarding'" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
       window.FontAwesomeConfig = { autoReplaceSvg: 'nest' };
@@ -21,19 +23,19 @@ TAILWIND_HEADER = """
 """
 
 # --------------------------
-# 1) Splash Screen: click anywhere to navigate to Onboarding
+# 1) Splash Screen: auto-redirect after 3 seconds to Onboarding
 # --------------------------
 SPLASH_SCREEN_HTML = f"""
 <html>
   {TAILWIND_HEADER}
-  <body onclick="window.location.href='?screen=Onboarding'" class="min-h-screen bg-gradient-to-br from-blue-200 to-teal-200 flex items-center justify-center" style="cursor: pointer;">
+  <body class="min-h-screen bg-gradient-to-br from-blue-200 to-teal-200 flex items-center justify-center">
     <div class="text-center">
       <div class="w-32 h-32 bg-white rounded-full flex items-center justify-center shadow-lg mx-auto">
           <i class="fa-solid fa-heart-pulse text-blue-500 text-5xl"></i>
       </div>
       <h1 class="text-4xl font-bold text-blue-900 mt-6">VitalScan</h1>
       <p class="text-lg text-teal-800 mt-2">Contactless Health Monitoring</p>
-      <p class="mt-4 text-sm text-gray-600">Tap anywhere to continue</p>
+      <p class="mt-4 text-sm text-gray-600">Please wait...</p>
     </div>
   </body>
 </html>
@@ -277,7 +279,7 @@ def main():
     st.set_page_config(page_title="Contactless Mobile Vital Signs", layout="wide")
     st.write("## Debug: Navigation Demo")
 
-    # Use st.query_params (a property) to read the query parameters.
+    # Use st.query_params to read the query parameters.
     qparams = st.query_params
     screen_param = qparams.get("screen", ["Splash"])[0]
 
