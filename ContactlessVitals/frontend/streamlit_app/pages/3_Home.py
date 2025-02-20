@@ -2,40 +2,39 @@ import streamlit as st
 
 st.set_page_config(page_title="How to Measure Your Vitals", layout="wide")
 
-# Inject custom CSS
+# Inject custom CSS for layout, cards, pinned footer, etc.
 st.markdown("""
 <style>
-/* Light background (or transparent if desired). 
-   Change #F9FAFB to 'transparent' if you want no background at all. */
+/* Light background for the entire page */
 body, [data-testid="stAppViewContainer"], [data-testid="stApp"], .block-container {
-    background-color: #F9FAFB !important; 
-    margin: 0; 
+    background-color: #F9FAFB !important;
+    margin: 0;
     padding: 0;
     font-family: sans-serif;
 }
 
-/* Remove default top/bottom padding, leave space for pinned footer */
+/* Remove extra top/bottom padding, add space for pinned footer */
 main .block-container {
     padding-top: 2rem !important;
-    padding-bottom: 6rem !important; 
+    padding-bottom: 6rem !important;
 }
 
 /* Centered container for heading & steps */
 .center-container {
-    max-width: 700px; 
-    margin: 0 auto; 
-    text-align: center;
+    max-width: 700px;
+    margin: 0 auto;           /* Center horizontally */
+    text-align: center;       /* Center text/icons inside */
 }
 
 /* Heading style */
 .center-container h1 {
-    font-size: 1.875rem;  /* ~ text-3xl */
+    font-size: 1.875rem;
     font-weight: 700;
     color: #111827;
     margin-bottom: 0.5rem;
 }
 .center-container p.subtitle {
-    font-size: 1rem; /* text-base */
+    font-size: 1rem;
     color: #4B5563;
     margin-bottom: 2rem;
 }
@@ -45,32 +44,32 @@ main .block-container {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
-    align-items: center; /* center each step horizontally */
+    align-items: center;      /* Center each step horizontally */
 }
 
-/* Each step "card" - no background, minimal border, everything stacked */
+/* Each step "card" - minimal border, everything stacked */
 .step-card {
-    border: 1px solid #E5E7EB;   /* or remove if you want zero border */
+    border: 1px solid #E5E7EB;
     border-radius: 0.5rem;
     padding: 2rem;
     width: 100%;
     max-width: 600px;
     display: flex;
-    flex-direction: column; /* stack number, image, text vertically */
-    align-items: center;    /* center horizontally */
-    text-align: center;     /* center text inside */
-    background-color: transparent; /* no white background */
-    box-shadow: none;       /* remove any shadow */
+    flex-direction: column;   /* Stack number, image, text vertically */
+    align-items: center;      /* Center horizontally */
+    text-align: center;       /* Center text inside */
+    background-color: transparent; /* No white background */
+    box-shadow: none;
     position: relative;
 }
 
-/* Step number badge at the top (slightly bigger circle) */
+/* Step number badge at the top */
 .step-badge {
     background-color: #E5E7EB;
     color: #111827;
     width: 2rem;
     height: 2rem;
-    border-radius: 9999px; 
+    border-radius: 9999px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -91,7 +90,7 @@ main .block-container {
 
 /* Step title & description below the image */
 .step-title {
-    font-size: 1.125rem; /* ~ text-lg */
+    font-size: 1.125rem;
     font-weight: 700;
     color: #111827;
     margin-bottom: 0.5rem;
@@ -189,6 +188,6 @@ st.markdown('</div>', unsafe_allow_html=True)  # close center-container
 # Pinned Footer
 ##########################
 st.markdown('<div class="footer-fixed">', unsafe_allow_html=True)
-if st.button("Got It, Let’s Start"):
+if st.button("Got It, Let's Start"):
     st.success("Tutorial complete! (placeholder)")
 st.markdown("</div>", unsafe_allow_html=True)
