@@ -1,107 +1,85 @@
 import streamlit as st
 
-st.markdown(
-    """
-    <style>
-    [data-testid="stSidebar"] {display: none;}
-    </style>
-    """,
-    unsafe_allow_html=True
-)
+st.set_page_config(page_title="Quick Start", layout="wide")
 
-st.set_page_config(page_title="History & Trends", layout="wide")
+###########################
+# 1) Top Bar: "Quick Start" left, [X] on right
+###########################
+colA, colB = st.columns([9,1])
+with colA:
+    st.markdown("<h2 style='margin:0;'>Quick Start</h2>", unsafe_allow_html=True)
+with colB:
+    # "X" button on the right
+    if st.button("✕", key="close_quickstart"):
+        st.write("Closed quick start (placeholder)")
 
+st.write("---")  # horizontal rule
+
+###########################
+# 2) "Before You Begin" Section
+###########################
+st.markdown("### Before You Begin")
 st.markdown("""
-<div class="min-h-screen bg-white">
-  <header class="fixed top-0 w-full bg-white border-b border-neutral-200 z-50">
-    <div class="flex items-center justify-between px-4 py-3">
-      <h1 class="text-xl font-semibold">History & Trends</h1>
-      <button style="background:none;border:none;padding:0.5rem;">
-        <i class="fa-solid fa-gear text-neutral-600"></i>
-      </button>
-    </div>
-  </header>
-  <main class="pt-16 pb-20 px-4">
-    <div id="date-filter" class="mb-6 flex items-center justify-between">
-      <select class="bg-white border border-neutral-200 rounded-lg px-4 py-2">
-        <option>Last 7 Days</option>
-        <option>Last 30 Days</option>
-        <option>Last 3 Months</option>
-      </select>
-      <button class="bg-neutral-100 px-4 py-2 rounded-lg">
-        <i class="fa-regular fa-calendar mr-2"></i>Custom Range
-      </button>
-    </div>
-    <div id="vitals-cards" class="space-y-6">
-      <!-- Blood Pressure Card -->
-      <div class="bg-white rounded-xl p-4 shadow-sm">
-        <div class="flex justify-between items-center mb-4">
-          <h2 class="text-lg font-semibold">Blood Pressure</h2>
-          <i class="fa-solid fa-heart-pulse text-neutral-600"></i>
+- Ensure good lighting on your face  
+- Keep your face relatively still  
+- Measurement takes about 30 seconds
+""")
+
+###########################
+# 3) Large Circle in Center
+###########################
+col1, col2, col3 = st.columns([1,2,1])
+with col2:
+    # We'll use inline HTML + CSS to create a dark circle with text in the center
+    st.markdown(
+        """
+        <div style="
+            width:100%; 
+            max-width:400px; 
+            aspect-ratio:1 / 1; 
+            background-color:#1F2937; 
+            border-radius:50%; 
+            margin:2rem auto; 
+            display:flex; 
+            align-items:center; 
+            justify-content:center;
+        ">
+            <p style="color:#FFFFFF; text-align:center; margin:0;">
+                Position your face within the circle
+            </p>
         </div>
-        <div class="h-[200px] bg-neutral-100 rounded-lg mb-4 flex items-center justify-center">
-          <span class="text-neutral-500">Graph Placeholder</span>
-        </div>
-        <div class="flex justify-between text-sm text-neutral-600">
-          <span>Average: 120/80</span>
-          <span>Highest: 135/88</span>
-          <span>Lowest: 110/70</span>
-        </div>
-      </div>
-      <!-- Additional cards for Heart Rate and Oxygen Saturation -->
-      <div class="bg-white rounded-xl p-4 shadow-sm">
-        <div class="flex justify-between items-center mb-4">
-          <h2 class="text-lg font-semibold">Heart Rate</h2>
-          <i class="fa-solid fa-heartbeat text-neutral-600"></i>
-        </div>
-        <div class="h-[200px] bg-neutral-100 rounded-lg mb-4 flex items-center justify-center">
-          <span class="text-neutral-500">Graph Placeholder</span>
-        </div>
-        <div class="flex justify-between text-sm text-neutral-600">
-          <span>Average: 72 bpm</span>
-          <span>Highest: 85 bpm</span>
-          <span>Lowest: 65 bpm</span>
-        </div>
-      </div>
-      <div class="bg-white rounded-xl p-4 shadow-sm">
-        <div class="flex justify-between items-center mb-4">
-          <h2 class="text-lg font-semibold">Oxygen Saturation</h2>
-          <i class="fa-solid fa-lungs text-neutral-600"></i>
-        </div>
-        <div class="h-[200px] bg-neutral-100 rounded-lg mb-4 flex items-center justify-center">
-          <span class="text-neutral-500">Graph Placeholder</span>
-        </div>
-        <div class="flex justify-between text-sm text-neutral-600">
-          <span>Average: 98%</span>
-          <span>Highest: 99%</span>
-          <span>Lowest: 96%</span>
-        </div>
-      </div>
-    </div>
-  </main>
-  <nav id="bottom-nav" class="fixed bottom-0 w-full bg-white border-t border-neutral-200">
-    <div class="flex justify-around py-3">
-      <button class="flex flex-col items-center">
-        <i class="fa-solid fa-house text-neutral-400"></i>
-        <span class="text-xs mt-1">Home</span>
-      </button>
-      <button class="flex flex-col items-center">
-        <i class="fa-solid fa-camera text-neutral-400"></i>
-        <span class="text-xs mt-1">Measure</span>
-      </button>
-      <button class="flex flex-col items-center">
-        <i class="fa-solid fa-chart-line text-neutral-900"></i>
-        <span class="text-xs mt-1">History</span>
-      </button>
-      <button class="flex flex-col items-center">
-        <i class="fa-solid fa-book-medical text-neutral-400"></i>
-        <span class="text-xs mt-1">Learn</span>
-      </button>
-      <button class="flex flex-col items-center">
-        <i class="fa-regular fa-user text-neutral-400"></i>
-        <span class="text-xs mt-1">Profile</span>
-      </button>
-    </div>
-  </nav>
-</div>
-""", unsafe_allow_html=True)
+        """,
+        unsafe_allow_html=True
+    )
+
+###########################
+# 4) "Start Measurement" Button (blue)
+###########################
+colA2, colB2, colC2 = st.columns([1,2,1])
+with colB2:
+    # Minimal CSS to force the button blue
+    st.markdown("""
+    <style>
+    .start-btn button {
+        display: block;
+        margin: 0 auto;
+        background-color: #3B82F6 !important;
+        color: #FFFFFF !important;
+        font-size: 1rem !important;
+        font-weight: 500 !important;
+        border-radius: 0.5rem !important;
+        border: none !important;
+        padding: 0.75rem 1.5rem !important;
+        max-width: 300px;
+        cursor: pointer;
+    }
+    .start-btn button:hover {
+        background-color: #2563EB !important;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
+    st.markdown("<div class='start-btn'>", unsafe_allow_html=True)
+    if st.button("Start Measurement", key="start_measure"):
+        st.success("Measurement started (placeholder).")
+    st.markdown("</div>", unsafe_allow_html=True)
