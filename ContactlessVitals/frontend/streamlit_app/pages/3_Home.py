@@ -1,4 +1,3 @@
-
 import streamlit as st
 
 st.set_page_config(page_title="How to Take Measurements", layout="wide")
@@ -80,7 +79,7 @@ main .block-container {
 """, unsafe_allow_html=True)
 
 #####################################
-# 2) Top Bar (Arrow on left, Skip on right)
+# 2) Top Bar
 #####################################
 st.markdown("""
 <div class="top-bar">
@@ -98,14 +97,19 @@ st.markdown("""
             clip-rule="evenodd"/>
     </svg>
   </button>
-
-  <!-- Skip as HTML (not st.columns) -->
-  <button type="button" style="background:none; border:none; cursor:pointer; font-size:1rem; color:#111827;"
-          onclick="alert('Skipping tutorial... (placeholder)')">
-    Skip
-  </button>
-</div>
 """, unsafe_allow_html=True)
+
+# Right side: "Skip" as a real Streamlit button
+# *** SMALL CHANGE HERE: columns([0.001, 0.999]) instead of columns([0.8, 0.2]) ***
+colA, colB = st.columns([0.001, 0.999])
+with colA:
+    st.write("")  # filler
+with colB:
+    if st.button("Skip"):
+        st.warning("Skipping tutorial... (placeholder)")
+
+# Close the top-bar div
+st.markdown("</div>", unsafe_allow_html=True)
 
 #####################################
 # 3) Centered Container for Heading + Steps
@@ -179,7 +183,6 @@ steps = [
     }
 ]
 
-# Render each step
 for step in steps:
     st.markdown(step["icon"], unsafe_allow_html=True)
     st.markdown(f"""
@@ -201,3 +204,4 @@ st.markdown('<div class="footer-fixed">', unsafe_allow_html=True)
 if st.button("Got It, Let's Start"):
     st.success("Tutorial complete! (placeholder)")
 st.markdown('</div>', unsafe_allow_html=True)
+
