@@ -1,27 +1,27 @@
 import streamlit as st
 
-# Hide the default sidebar
+# Configure the page (must be the first Streamlit call)
+st.set_page_config(page_title="Contactless Mobile Vital Signs", layout="wide")
+
+# Optionally, hide the default sidebar with CSS
 st.markdown(
     """
     <style>
-    [data-testid="stSidebar"] {
-        display: none;
-    }
+    [data-testid="stSidebar"] { display: none; }
     </style>
     """,
-    unsafe_allow_html=True
+    unsafe_allow_html=True,
 )
 
-# Set up the main landing page
-st.set_page_config(page_title="Contactless Mobile Vital Signs", layout="wide")
+# Main landing page content
 st.title("Contactless Mobile Vital Signs")
-st.write("Welcome to the Contactless Mobile Vital Signs app. Use the buttons below to navigate to the different pages.")
+st.write("Welcome to the Contactless Mobile Vital Signs app. Use the buttons below to navigate to different pages.")
 
-# Provide navigation buttons that switch pages
+# Navigation buttons using st.switch_page()
 if st.button("Splash Screen"):
-    st.switch_page("Splash")       # This should match the title or name of your splash page file (e.g. "Splash.py")
+    st.switch_page("Splash")          # This should match the page name in your pages folder
 if st.button("Onboarding"):
-    st.switch_page("Onboarding")   # Make sure your onboarding page is named accordingly
+    st.switch_page("Onboarding")
 if st.button("Home"):
     st.switch_page("Home")
 if st.button("Measurement"):
