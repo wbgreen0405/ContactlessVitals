@@ -83,6 +83,7 @@ main .block-container {
 #####################################
 st.markdown("""
 <div class="top-bar">
+
   <!-- Left arrow (HTML). If you need a Python callback, replace with st.button. -->
   <button type="button" style="background:none; border:none; cursor:pointer;"
           onclick="alert('Back arrow clicked (placeholder)')">
@@ -98,11 +99,12 @@ st.markdown("""
     </svg>
   </button>
 
-  <!-- Skip as HTML (not st.columns) -->
+  <!-- Skip as pure HTML (no st.columns) -->
   <button type="button" style="background:none; border:none; cursor:pointer; font-size:1rem; color:#111827;"
           onclick="alert('Skipping tutorial... (placeholder)')">
     Skip
   </button>
+
 </div>
 """, unsafe_allow_html=True)
 
@@ -178,7 +180,6 @@ steps = [
     }
 ]
 
-# Render each step
 for step in steps:
     st.markdown(step["icon"], unsafe_allow_html=True)
     st.markdown(f"""
@@ -191,6 +192,7 @@ for step in steps:
     """, unsafe_allow_html=True)
 
 st.markdown("</div>", unsafe_allow_html=True)  # close the .card
+
 st.markdown("</div>", unsafe_allow_html=True)  # close the .centered-container
 
 #####################################
