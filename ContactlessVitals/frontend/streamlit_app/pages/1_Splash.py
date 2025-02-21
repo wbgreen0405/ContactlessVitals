@@ -25,7 +25,7 @@ body, [data-testid="stAppViewContainer"], [data-testid="stApp"], .block-containe
     padding: 2rem 1rem;
 }
 
-/* Logo + Title replaced by our custom flex container */
+/* Top brand: heart icon with text next to it */
 .top-brand {
     display: flex;
     align-items: center;
@@ -33,13 +33,13 @@ body, [data-testid="stAppViewContainer"], [data-testid="stApp"], .block-containe
     margin-bottom: 1.5rem;
 }
 .top-brand i {
-    font-size: 2.5rem; /* equivalent to text-4xl */
-    color: #A855F7; /* text-purple-600 */
+    font-size: 2.5rem;
+    color: #A855F7; /* Purple color */
 }
 .top-brand span {
-    font-size: 1.5rem; /* text-2xl */
-    font-weight: 600;
-    margin-left: 0.5rem; /* ml-2 */
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-left: 0.5rem; /* Adds space between the icon and text */
 }
 
 /* Hero image */
@@ -83,7 +83,7 @@ body, [data-testid="stAppViewContainer"], [data-testid="stApp"], .block-containe
 
 /* The blue "Get Started" button style */
 .blue-btn button {
-    background-color: #6366F1 !important; /* or use #3B82F6 if desired */
+    background-color: #6366F1 !important; /* or #3B82F6 if you prefer */
     color: #FFFFFF !important;
     font-size: 1rem !important;
     font-weight: 500 !important;
@@ -96,7 +96,7 @@ body, [data-testid="stAppViewContainer"], [data-testid="stApp"], .block-containe
     display: block;
 }
 .blue-btn button:hover {
-    background-color: #4F46E5 !important; /* or #2563EB if using #3B82F6 */
+    background-color: #4F46E5 !important; /* or #2563EB if using #3B82F6 above */
 }
 
 /* Sign in link */
@@ -116,7 +116,7 @@ body, [data-testid="stAppViewContainer"], [data-testid="stApp"], .block-containe
 # Main container
 st.markdown('<div class="landing-container">', unsafe_allow_html=True)
 
-# 1) Top Brand: Custom icon + ContactlessVitals text
+# 1) Top Brand: Heart icon and "ContactlessVitals" text
 st.markdown("""
 <div class="top-brand">
     <i class="fa-solid fa-heart-pulse"></i>
