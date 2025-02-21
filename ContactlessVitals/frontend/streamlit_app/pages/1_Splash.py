@@ -2,6 +2,11 @@ import streamlit as st
 
 st.set_page_config(page_title="ContactlessVitals", layout="centered")
 
+# Include Font Awesome for the heart icon
+st.markdown("""
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+""", unsafe_allow_html=True)
+
 # Minimal CSS for a "mobile-like" single column layout
 st.markdown("""
 <style>
@@ -20,16 +25,21 @@ body, [data-testid="stAppViewContainer"], [data-testid="stApp"], .block-containe
     padding: 2rem 1rem;
 }
 
-/* Logo + Title */
-.logo {
-    width: 50px;
-    margin: 0 auto 1rem auto;
-    display: block;
+/* Logo + Title replaced by our custom flex container */
+.top-brand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
 }
-.app-name {
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
+.top-brand i {
+    font-size: 2.5rem; /* equivalent to text-4xl */
+    color: #A855F7; /* text-purple-600 */
+}
+.top-brand span {
+    font-size: 1.5rem; /* text-2xl */
+    font-weight: 600;
+    margin-left: 0.5rem; /* ml-2 */
 }
 
 /* Hero image */
@@ -73,7 +83,7 @@ body, [data-testid="stAppViewContainer"], [data-testid="stApp"], .block-containe
 
 /* The blue "Get Started" button style */
 .blue-btn button {
-    background-color: #6366F1 !important; /* or #3B82F6 if you prefer */
+    background-color: #6366F1 !important; /* or use #3B82F6 if desired */
     color: #FFFFFF !important;
     font-size: 1rem !important;
     font-weight: 500 !important;
@@ -86,7 +96,7 @@ body, [data-testid="stAppViewContainer"], [data-testid="stApp"], .block-containe
     display: block;
 }
 .blue-btn button:hover {
-    background-color: #4F46E5 !important; /* or #2563EB if using #3B82F6 above */
+    background-color: #4F46E5 !important; /* or #2563EB if using #3B82F6 */
 }
 
 /* Sign in link */
@@ -106,10 +116,12 @@ body, [data-testid="stAppViewContainer"], [data-testid="stApp"], .block-containe
 # Main container
 st.markdown('<div class="landing-container">', unsafe_allow_html=True)
 
-# 1) Logo + name
+# 1) Top Brand: Custom icon + ContactlessVitals text
 st.markdown("""
-<img src="https://via.placeholder.com/50?text=CV" alt="Logo" class="logo" />
-<div class="app-name">ContactlessVitals</div>
+<div class="top-brand">
+    <i class="fa-solid fa-heart-pulse"></i>
+    <span>ContactlessVitals</span>
+</div>
 """, unsafe_allow_html=True)
 
 # 2) Hero image
@@ -146,7 +158,6 @@ st.markdown('</div>', unsafe_allow_html=True)
 if start_clicked:
     st.success("Starting measurement... (placeholder)")
 
-# Sign In link
 st.markdown('<a href="#" class="signin-link">Sign In</a>', unsafe_allow_html=True)
 
 st.markdown('</div>', unsafe_allow_html=True)  # close landing-container
